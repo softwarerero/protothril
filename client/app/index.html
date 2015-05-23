@@ -1,0 +1,66 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+  <meta charset="utf-8">
+  <title>Protothril</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <link rel="icon" type="image/png" href="img/bobble.png" />
+
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="bower_components/pure/pure-min.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+
+  <!-- build:js scripts/vendor/modernizr.js -->
+  <script src="bower_components/modernizr/modernizr.js"></script>
+  <!-- endbuild -->
+</head>
+
+<body>
+  <!--[if lt IE 10]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+  <noscript><p>No JavaScript!</p></noscript>
+
+  <div id='wrap'>
+    <div class='pure-g-r'>
+      <div class='pure-u-1-1 menuline1'>
+        <div class='container'>
+          <div id='menu'></div>
+          <div id='message'></div>
+          <img src="img/loading.gif" id='loading'/>
+          <div id="my-content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='footer pure-u-1-1'>
+    <div class='container'>
+      <span class='pull-left'>
+        © 2015 Protothril Test
+      </span>
+      <span class='pull-right'>
+        Diseño <a href="http://sun.com.py/html/es/index.html">SUNCOM Systems</a>
+      </span>
+    </div>
+  </div>
+
+  <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/mithril/mithril.js"></script>
+  <script src="bower_components/mithril.sugartags/mithril.sugartags.js"></script>
+  <!--<script src="bower_components/pure/pure-min.js"></script>-->
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:js scripts/main.js -->
+  <script src="scripts/main.js"></script>
+  <!-- endbuild -->
+</body>
+
+</html>
