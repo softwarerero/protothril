@@ -6,7 +6,8 @@ T9n = require '../util/T9n'
 module.exports = class User extends Module
 
   constructor: (@app) ->
-    super(@app)
+#    super(UserVM)
+    @vm = UserVM
 
   @controller: () =>
 #    console.log @app
@@ -32,15 +33,11 @@ module.exports = class User extends Module
     [
       H4('User')
       FORM {class: 'pure-form pure-form-stacked'}, [
-        LABEL {}, T9n.get 'Email'
-        INPUT {id: 'email', onchange: m.withAttr("value", attr.email), value: attr.email()}
-        LABEL {}, T9n.get 'Nickname'
-        INPUT {onchange: m.withAttr("value", attr.nickname), value: attr.nickname()}
-        LABEL {}, T9n.get 'Firstname'
-        INPUT {onchange: m.withAttr("value", attr.firstname), value: attr.firstname()}
-        LABEL {}, T9n.get 'Lastname'
-        INPUT {onchange: m.withAttr("value", attr.lastname), value: attr.lastname()}
-        LABEL {}, T9n.get 'Password'
+        @makeInput attr, 'email'
+        @makeInput attr, 'nickname'
+        @makeInput attr, 'firstname'
+        @makeInput attr, 'lastname'
+        LABEL {}, T9n.get 'password'
         INPUT {type: 'password', onchange: m.withAttr("value", attr.password), value: attr.password()}
         BUTTON {onclick: ctrl.save, class: 'pure-button pure-button-primary'}, T9n.get "Save"
         SPAN ' '

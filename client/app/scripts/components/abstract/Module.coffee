@@ -1,4 +1,5 @@
 m = require 'mithril'
+T9n = require '../util/T9n'
 
 module.exports = class Module
 
@@ -16,4 +17,11 @@ module.exports = class Module
  
   xhrConfig: (xhr) =>
     xhr.setRequestHeader "Authorization", 'Bearer ' + window.sessionStorage.token
+
+
+  @makeInput = (attr, field) ->
+    [
+      LABEL {}, T9n.get field
+      INPUT {id: field, onchange: m.withAttr("value", attr[field]), value: attr.email()}
+    ]
     

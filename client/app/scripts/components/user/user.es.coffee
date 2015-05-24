@@ -6,11 +6,11 @@ es =
   Users: 'Usuarios'
   Login: 'Entrar'
   
-  Email: 'Email'
-  Nickname: 'Apodo'
-  Firstname: 'Nombre'
-  Lastname: 'Apellido'
-  Password: 'Contraseña'
+  email: 'Email'
+  nickname: 'Apodo'
+  firstname: 'Nombre'
+  lastname: 'Apellido'
+  password: 'Contraseña'
   
 
 T9n.map "es", es
