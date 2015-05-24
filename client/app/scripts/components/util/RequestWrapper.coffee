@@ -1,9 +1,6 @@
 m = require 'mithril'
-#module.exports = class Login
 module.exports = class RequestWrapper
   constructor: (@opts) ->
-#(opts) ->
-#  new () ->
     me = this
     me.opts = @opts
     me.success = me.loading = me.failed = false

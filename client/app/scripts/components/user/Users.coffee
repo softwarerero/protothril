@@ -47,18 +47,12 @@ module.exports = class Users extends Module
         ]
       ]
     ]
-#    m.redraw()
     
     
-#  idAlert = (id) ->
-#    console.log id
-    
-  extract: (xhr, xhrOptions) =>
-    console.log 'extract'
-#    console.log 'status: ' + xhr.status
-#    console.log 'responseText: ' + xhr.responseText
-    if xhr.status is 401
-      @app.message.error xhr.responseText
-    else
-      @app.message.success 'Got users.'
-    xhr.response
+#  extract: (xhr, xhrOptions) =>
+#    console.log 'extract'
+#    if xhr.status is 401
+#      @app.message.error xhr.responseText
+#    else
+#      @app.message.success 'Got users.'
+#    xhr.response

@@ -9,17 +9,12 @@ module.exports = class User extends Module
     super(@app)
 
   @controller: () =>
-    console.log @app
-#    console.log 'controller.app: ' + JSON.stringify @conf.url
+#    console.log @app
 
-    back: () ->
-      console.log 'back: ' + VM.current.homeRoute
-      m.route VM.current.homeRoute
+    back: () -> m.route VM.current.homeRoute
 
     save: () ->
-#      console.log 'save'
       attr = VM.current.attributes
-#      console.log 'attr: ' + JSON.stringify attr
       msgs = VM.validate attr
       if msgs.length
         console.log "error: " + msgs[0]
