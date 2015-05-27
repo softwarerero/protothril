@@ -34,7 +34,7 @@ module.exports = class UserVM extends ViewModel
     test = (val) -> if val then msgs.push val
     test Validation.email obj.email(), {fieldName: 'Email'}
     test Validation.notNull obj.nickname(), {fieldName: 'Nickname'}
-    test Validation.minChar obj.nickname(), {fieldName: 'Nickname', length: 3}
+    test Validation.minLength obj.nickname(), {fieldName: 'Nickname', length: 3}
     msgs
     
 

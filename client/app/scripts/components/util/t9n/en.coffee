@@ -7,7 +7,7 @@ module.exports = en =
   validation:
     email: '@{fieldName} is not valid'
     notNull: '@{fieldName} cannot be empty'
-    minChar: '@{fieldName} must be minimum @{length} characters long'
+    minLength: '@{fieldName} must be minimum @{length} characters long'
 
 
   add: "add"

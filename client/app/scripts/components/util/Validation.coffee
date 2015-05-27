@@ -3,7 +3,10 @@ T9n = require './T9n'
 module.exports = class Validation
 
   @notNull: (x, params) -> if !!x then null else @t9n 'validation.notNull', params
-  @minChar: (x, params) -> if x.length >= params.length then null else @t9n 'validation.minChar', params  
+  @minLength: (x, params) -> if x.length >= params.length then null else @t9n 'validation.minLength', params
+  @maxLength: (x, params) -> if x.length < params.length then null else @t9n 'validation.minLength', params
+  @min: (x, params) -> if x >= params.min then null else @t9n 'validation.min', params
+  @max: (x, params) -> if x >= params.max then null else @t9n 'validation.max', params
 
   # http://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149
   @regEx: (x, regex, msg, params) -> if x.match regex then null else @t9n msg, params

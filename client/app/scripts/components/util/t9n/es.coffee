@@ -12,7 +12,10 @@ module.exports = es =
   validation:
     email: '@{fieldName} no es un email'
     notNull: '@{fieldName} no puede ser vacio'
-    minChar: '@{fieldName} necesita minimo @{length} letras' 
+    minLength: '@{fieldName} necesita mínimo @{length} letras'
+    maxLength: '@{fieldName} necesita maximo @{length} letras'
+    min: 'El mínimo para @{fieldName} es @{length}'
+    min: 'El mínimo para @{fieldName} es @{length}'
 
   crud:
     saved: '@{modelName} guardado'
