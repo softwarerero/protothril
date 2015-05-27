@@ -4,17 +4,8 @@ Validation = require '../util/Validation'
 require './user.es'
 
 
-#module.exports = class UserVM extends ViewModel
-#  constructor: () ->
-#    @move()
-#
-#  move: (meters) ->
-#    console.log " moved #{meters}m."
-
 module.exports = class UserVM extends ViewModel
 
-#  @users: m.prop([])
-  
   constructor: () ->
     @modelName = 'User'
     @vm = UserVM
@@ -36,25 +27,7 @@ module.exports = class UserVM extends ViewModel
       password: m.prop ''
 
   @current: new UserVM
-  
-  cache: () ->
-    window.caches[@verb]?()
-#    console.log 'ViewModel.caches[@verb]: ' + !!ViewModel.caches[@verb]
-#    if not ViewModel.caches[@verb]
-#      console.log 2
-##      ViewModel.caches[@verb] = m.prop []
-#      console.log 3
-#      @all (x) ->
-#        console.log 'fill cache'
-#        ViewModel.caches[@verb] = m.prop x
-#        callback x
-  setCache: (x) ->
-#    if not ViewModel.caches[@verb].length
-#    cache = ViewModel.caches[@verb]
-#    if not cache
-#      cache = m.prop []
-#    cache(x)
-    window.caches[@verb] = m.prop x
+  createObj: -> new UserVM
   
   @validate: (obj) ->
     msgs = []
@@ -65,5 +38,4 @@ module.exports = class UserVM extends ViewModel
     msgs
     
 
-  createObj: -> new UserVM
 

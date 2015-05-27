@@ -92,5 +92,11 @@ module.exports = class ViewModel
           @msgError T9n.get 'no data'
           @goHome()
         @cloneAttributes @vm.current, xhr
-          
+
+        
+  cache: () ->
+    window.caches[@verb]?()
+
+  setCache: (x) ->
+    window.caches[@verb] = m.prop x
   
