@@ -5,16 +5,14 @@ module.exports = class ViewModel
 
   @app: window.App
   @conf: @app.conf
+  window.caches = {} # if caches are stored at window level different windows can edit different objects
 
 
-  cloneAttributes: (vm) ->
-    obj = @createObj()
-    console.log 'cloneAttributes: ' + JSON.stringify vm.attributes
-    for key, value of vm.attributes
-      console.log 'cloneAttributes: ' + value()
-      if value()
-        obj.attributes[key](value())
-    console.log 'obj: ' + JSON.stringify obj
+  cloneAttributes: (obj, vm) ->
+    obj.init()
+    for key, value of vm
+      if value
+        obj.attributes[key]?(value)
     obj
     
   xhrConfig: (xhr) =>
@@ -25,6 +23,9 @@ module.exports = class ViewModel
     m.route @homeRoute
     
   msgSuccess: (msg) -> ViewModel.app.message.success msg
+  msgError: (msg) -> ViewModel.app.message.error msg
+  msgWarn: (msg) -> ViewModel.app.message.warn msg
+    
     
   loadingRequest: (args) ->
     loading = document.getElementById("loading")
@@ -33,41 +34,63 @@ module.exports = class ViewModel
       loading.style.display = "none"
       value
 
+  allRequest: -> {method: "GET", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig}    
+
   all: () ->
-    if not @cache().length
-      console.log 'url: ' + ViewModel.conf.url + "#{@verb}"
-      request = {method: "GET", url: ViewModel.conf.url + "#{@verb}", config: @xhrConfig, extract: @extract}
+    if not window.caches[@verb]
+      console.log 'url: ' + ViewModel.conf.url + "#{@url}"
+#      request = {method: "GET", url: ViewModel.conf.url + "#{@verb}", config: @xhrConfig, extract: @extract}
+      request = {method: "GET", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig}
       @loadingRequest(request).then (xhr, xhrOptions) =>
-        @cache([])
-        for u in xhr
+        console.log 'xhr: ' + JSON.stringify xhr
+        objs = []
+        for o in xhr
           obj = @createObj()
-          for k, v of u
-            obj.attributes[k](v)
-          @cache().push obj
-        @cache().map (u, index) ->
-          attr = u.attributes
-        m.redraw()
-    @cache
+          @cloneAttributes obj, o
+          objs.push obj
+        @vm.current.setCache objs
+          
 
-
-  save: () =>
-    request = {method: "PUT", url: ViewModel.conf.url + "#{@verb}", config: @xhrConfig, data: @attributes}
+  save: () ->
+    request = {method: "PUT", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: @attributes}
     @loadingRequest(request).then (xhr, xhrOptions) =>
-      if not @attributes.id()
-        obj = @cloneAttributes @vm.current
-        obj.attributes.id(xhr._id)
-        @cache().push obj
+      if @attributes.id()
+        objs = @cache().filter (o) ->
+          o.attributes.id() isnt xhr._id
+        objs.push @vm.current
+        @vm.current.setCache objs
+      else
+        @vm.current.attributes.id xhr._id
+        @cache().push @vm.current
       @msgSuccess T9n.get 'crud.saved', {modelName: @modelName}
-      @goHome()
+      m.redraw()
     false
 
   delete: (id) =>
     data = {id: id}
-    request = {method: "DELETE", url: ViewModel.conf.url + "#{@verb}", config: @xhrConfig, data: data}
+    request = {method: "DELETE", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: data}
     @loadingRequest(request).then (xhr, xhrOptions) =>
-      console.log "xhr: " + JSON.stringify xhr
-      users = @cache().filter (u) ->
-        u.attributes.id() isnt xhr._id
-      @vm.current.setCache users
+      objs = @cache().filter (o) ->
+        o.attributes.id() isnt xhr._id
+      @vm.current.setCache objs
       @msgSuccess T9n.get 'crud.deleted', {modelName: @modelName}
     false    
+    
+  
+  getForId: (id) =>
+    if not id then return
+    objs = @cache()
+    if objs?.length
+      objs = objs.filter (o) ->
+        o.attributes.id() is id
+      @vm.current = objs[0]
+    else
+      console.log 'GET: ' + ViewModel.conf.url + "#{@url}/#{id}"
+      request = {method: "GET", url: ViewModel.conf.url + "#{@url}/#{id}", config: @xhrConfig}
+      @loadingRequest(request).then (xhr, xhrOptions) =>
+        if not xhr
+          @msgError T9n.get 'no data'
+          @goHome()
+        @cloneAttributes @vm.current, xhr
+          
+  

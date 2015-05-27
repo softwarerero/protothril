@@ -3,17 +3,31 @@ ViewModel = require '../abstract/ViewModel'
 Validation = require '../util/Validation'
 require './user.es'
 
+
+#module.exports = class UserVM extends ViewModel
+#  constructor: () ->
+#    @move()
+#
+#  move: (meters) ->
+#    console.log " moved #{meters}m."
+
 module.exports = class UserVM extends ViewModel
 
-  @current: new UserVM
-  @users: m.prop([])
-
-  constructor: ->
+#  @users: m.prop([])
+  
+  constructor: () ->
     @modelName = 'User'
     @vm = UserVM
-    @verb = 'api/user'
+    @verb = 'user'
+    @url = 'api/user'
     @homeRoute = '/users'
-    @attributes = 
+    # create clean hash map without object prototype - ECMAScript5
+    # see: http://ryanmorr.com/true-hash-maps-in-javascript/
+    @attributes = Object.create(null)
+    @init()
+
+  init: (meters) ->
+    @attributes =
       id: m.prop ''
       email: m.prop '1@1.cc'
       nickname: m.prop ''
@@ -21,25 +35,27 @@ module.exports = class UserVM extends ViewModel
       lastname: m.prop ''
       password: m.prop ''
 
-  cache: () -> @vm.users()
-  setCache: (x) -> @vm.users(x)
+  @current: new UserVM
   
-#  all: ->
-#    console.log 'hi: ' + not @cache().length
-#    if not @cache().length
-#      console.log 'userlist url: ' + Model.conf.url + 'api/user'
-#      request = {method: "GET", url: Model.conf.url + 'api/user', config: @xhrConfig, extract: @extract}
-#      m.request(request).then (xhr, xhrOptions) =>
-#        @cache([])
-#        for u in xhr
-#          user = new UserVM()
-#          for k, v of u
-#            user.attributes[k](v)
-#          @cache().push user
-#        @cache().map (u, index) ->
-#          attr = u.attributes
-#    @cache()
-
+  cache: () ->
+    window.caches[@verb]?()
+#    console.log 'ViewModel.caches[@verb]: ' + !!ViewModel.caches[@verb]
+#    if not ViewModel.caches[@verb]
+#      console.log 2
+##      ViewModel.caches[@verb] = m.prop []
+#      console.log 3
+#      @all (x) ->
+#        console.log 'fill cache'
+#        ViewModel.caches[@verb] = m.prop x
+#        callback x
+  setCache: (x) ->
+#    if not ViewModel.caches[@verb].length
+#    cache = ViewModel.caches[@verb]
+#    if not cache
+#      cache = m.prop []
+#    cache(x)
+    window.caches[@verb] = m.prop x
+  
   @validate: (obj) ->
     msgs = []
     test = (val) -> if val then msgs.push val

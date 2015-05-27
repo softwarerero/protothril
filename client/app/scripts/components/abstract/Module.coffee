@@ -22,6 +22,8 @@ module.exports = class Module
   @makeInput = (attr, field) ->
     [
       LABEL {}, T9n.get field
-      INPUT {id: field, onchange: m.withAttr("value", attr[field]), value: attr.email()}
+#      val = if attr[field] then attr[field] else ''
+      INPUT {id: field, onchange: m.withAttr("value", attr[field]), value: attr[field]()}
+#      INPUT {id: field, onchange: m.withAttr("value", attr[field]), value: val}
     ]
     

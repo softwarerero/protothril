@@ -81,6 +81,12 @@ app.get '/api/user', (req, res) ->
 #    res.json { users: result }
     res.json result
 
+app.get '/api/user/:id', (req, res) ->
+#  console.log 'id1: ' + JSON.stringify JSON.stringify req.params.id
+  Users.getOne req.params.id, (result) ->
+#    res.json { users: result }
+    res.json result
+
 app.put '/api/user', (req, res) ->
   console.log 'user: ' + JSON.stringify req.body
 #  attr = req.body
@@ -148,16 +154,19 @@ class Users
         obj = { id: hit._id }
         for attr in attrs
           obj = Users.appendHit hit._source, obj, attr
-#        obj = Users.appendHit hit._source, obj, 'nickname'
-#        obj = Users.appendHit hit._source, obj, 'email'
-#        obj = Users.appendHit hit._source, obj, 'firstname'
-#        obj = Users.appendHit hit._source, obj, 'lastname'
         obj
 #      console.log "result: " + JSON.stringify result
       callback result
 
-  @appendHit = (hit, obj, field) ->
-    if hit[field]
-      obj[field] = hit[field]
-    obj
+    @appendHit = (hit, obj, field) ->
+      if hit[field]
+        obj[field] = hit[field]
+      obj
+
+  @getOne: (id, callback) ->
+    console.log "id: " + JSON.stringify id
+    el.getOne {q: "id:#{id}"}, (error, response) ->
+      console.log "error: " + JSON.stringify error
+      console.log "response: " + JSON.stringify response
+      callback response?._source
       

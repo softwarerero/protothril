@@ -4,13 +4,13 @@ conf = require '../conf'
 
 client = new elasticsearch.Client
 #  host: 'localhost:9200',
-  host: conf.elasticsearch.host
+  host: conf.elasticsearch.host || process.env.elasticsearch
   log: 'error'
 
 exports.index_prefix = conf.appName + '.'  
 exports.indexName = 'prototype00' # conf.elasticsearch.index
 exports.typeName = null
-exports.hola = 'hola'
+#exports.hola = 'hola'
 
 #exports.sayHola = ->
 #  console.log 'hola2: ' + exports.hola
@@ -51,20 +51,21 @@ exports.getAll = (typeName=exports.typeName, indexName=exports.indexName, callba
       console.log "status: " + status
     callback(error, response)
 
-#exports.getOne = (params={}, callback) ->
-#  params.size = params.size || 1
-#  params.index = params.index || exports.indexName
-#  console.log "params: " + JSON.stringify params
-##  client.search {size: 1, index: index, type: type, q: q}, (error, response, status) ->
-#  client.search params, (error, response, status) ->
-#    if error
-#      console.log "error: " + error
-#      console.log "status: " + status
-#    if response
-#      response = response.hits.hits[0]
-#    if callback
-#      callback(error, response)
-#
+exports.getOne = (params={}, callback) ->
+  params.size = params.size || 1
+  params.index = params.index || exports.indexName
+  console.log "params: " + JSON.stringify params
+#  client.search {size: 1, index: index, type: type, q: q}, (error, response, status) ->
+  client.search params, (error, response, status) ->
+    if error
+      console.log "error: " + error
+      console.log "status: " + status
+    if response
+#      console.log "response: " + JSON.stringify response
+      response = response.hits.hits[0]
+    if callback
+      callback(error, response)
+
 #DEF_PAGE_SIZE = 20
 #exports.get = (params={}, callback, type, index) ->
 #  params.size = params.size || DEF_PAGE_SIZE

@@ -5,14 +5,21 @@ T9n = require '../util/T9n'
 
 module.exports = class User extends Module
 
+#  @vm = UserVM
+  
   constructor: (@app) ->
 #    super(UserVM)
-    @vm = UserVM
+#    @vm = UserVM
 
   @controller: () =>
-#    console.log @app
 
-    back: () -> m.route VM.current.homeRoute
+    id = m.route.param("id")
+    VM.current.getForId id
+
+    back: () -> 
+      console.log 'back: ' + VM.current.homeRoute
+      m.route VM.current.homeRoute
+      false
 
     save: () ->
       attr = VM.current.attributes
@@ -24,14 +31,13 @@ module.exports = class User extends Module
         VM.current.save()
         m.route VM.current.homeRoute
       false
-      
-      
+    
+    
+
   @view: (ctrl) ->
-    vm = VM.current
-    attr = vm.attributes
-    console.log 'email: ' + attr.email()
+    attr = VM.current.attributes
     [
-      H4('User')
+      H4(T9n.get 'User')
       FORM {class: 'pure-form pure-form-stacked'}, [
         @makeInput attr, 'email'
         @makeInput attr, 'nickname'
