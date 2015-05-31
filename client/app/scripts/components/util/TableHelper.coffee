@@ -1,7 +1,6 @@
 module.exports = class TableHelper
 
   constructor: (@vm) ->
-    console.log 'create TableHelper: ' + @vm
     
   sorts: (e) =>
     prop = e.target.getAttribute("data-sort-by")

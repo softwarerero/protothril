@@ -27,16 +27,22 @@ module.exports = class UserVM extends ViewModel
       firstname: m.prop ''
       lastname: m.prop ''
       password: m.prop ''
+      birthday: m.prop ''
 
   @current: new UserVM
   createObj: -> new UserVM
    
   @validate: (obj) ->
     msgs = []
-    test = (val) -> if val then msgs.push val
-    test Validation.email obj.email(), {fieldName: T9n.get('email')}
-    test Validation.notNull obj.nickname(), {fieldName: T9n.get('nickname')}
-    test Validation.minLength obj.nickname(), {fieldName: T9n.get('nickname'), length: 3}
+    test = (field, val) -> 
+      if val
+        obj = 
+          name: field
+          msg: val
+        msgs.push obj
+    test 'email', Validation.email obj.email(), {fieldName: T9n.get('email')}
+    test 'nickname', Validation.notNull obj.nickname(), {fieldName: T9n.get('nickname')}
+    test 'nickname', Validation.minLength obj.nickname(), {fieldName: T9n.get('nickname'), length: 3}
     msgs
     
   filters:

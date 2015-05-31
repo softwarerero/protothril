@@ -36,19 +36,21 @@ module.exports = class ViewModel
 
   allRequest: -> {method: "GET", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig}    
 
-  all: () ->
+  all: (callback) ->
     if not window.caches[@verb]
-      console.log 'url: ' + ViewModel.conf.url + "#{@url}"
+#      console.log 'url: ' + ViewModel.conf.url + "#{@url}"
 #      request = {method: "GET", url: ViewModel.conf.url + "#{@verb}", config: @xhrConfig, extract: @extract}
       request = {method: "GET", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig}
       @loadingRequest(request).then (xhr, xhrOptions) =>
-        console.log 'xhr: ' + JSON.stringify xhr
+#        console.log 'xhr: ' + JSON.stringify xhr
         objs = []
         for o in xhr
           obj = @createObj()
           @cloneAttributes obj, o
           objs.push obj
         @vm.current.setCache objs
+        if callback
+          callback(objs)
           
 
   save: () ->
@@ -92,10 +94,14 @@ module.exports = class ViewModel
           @msgError T9n.get 'no data'
           @goHome()
         @cloneAttributes @vm.current, xhr
-
+ 
         
   cache: () ->
-    window.caches[@verb]?()
+    if not window.caches[@verb]
+      @all (objs) ->
+        objs
+    else
+      window.caches[@verb]?()
 
   setCache: (x) ->
     window.caches[@verb] = m.prop x

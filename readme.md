@@ -15,15 +15,21 @@ Protothril is the idea of a blueprint for web applications. It should include th
 # Features (√ means done)
 * Ability to translate UI √
 * Validation (in work)
-* Crud lists with sorting and filtering √
-* Easy form creation with helpers for date, select, number, currency
+* Crud lists with 
+  sorting, √
+  filtering and √
+  pagination.
+* Easy form creation with helpers for 
+  * date
+  * select
+  * number
+  * currency
 * User Management
 * Authentification
 * Role bases authorization
 * Mobile App Ready (Cordova)
 * Easy Deploy
 * Modularization of server code
-* List pagination
 
 # V2 Features
 * Datatransport with Messagepack
