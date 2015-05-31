@@ -12,10 +12,10 @@ Protothril is the idea of a blueprint for web applications. It should include th
 * elasticsearch
 * Express
 
-# Features
+# Features (√ means done)
 * Ability to translate UI √
 * Validation (in work)
-* Crud lists with sorting and filtering
+* Crud lists with sorting and filtering √
 * Easy form creation with helpers for date, select, number, currency
 * User Management
 * Authentification
