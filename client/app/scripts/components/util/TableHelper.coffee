@@ -1,30 +1,11 @@
-m = require 'mithril'
-T9n = require '../util/T9n'
+module.exports = class TableHelper
 
-module.exports = class Module
-
-  @app: window.App
-  @conf: @app.conf
-
-  @msgSuccess: (msg) -> @app.message.success msg
-  @msgError: (msg) -> @app.message.error msg
- 
-  xhrConfig: (xhr) =>
-    xhr.setRequestHeader "Authorization", 'Bearer ' + window.sessionStorage.token
-
-
-  @makeInput = (attr, field) ->
-    [
-      LABEL {}, T9n.get field
-#      val = if attr[field] then attr[field] else ''
-      INPUT {id: field, onchange: m.withAttr("value", attr[field]), value: attr[field]()}
-#      INPUT {id: field, onchange: m.withAttr("value", attr[field]), value: val}
-    ]
-
+  constructor: (@vm) ->
+    console.log 'create TableHelper: ' + @vm
     
-  sorts = (e) ->
+  sorts: (e) =>
     prop = e.target.getAttribute("data-sort-by")
-    list = VM.current.cache()
+    list = @vm.cache()
     if prop
       first = list[0]
       list.sort (a, b) ->
@@ -38,10 +19,10 @@ module.exports = class Module
         e.target.className = 'asc'
 
 
-  filter = (e) ->
+  filter: (e) =>
     search = document.getElementsByClassName('search')[0].value
     m.startComputation()
-    VM.current.cache()?.map (o, index) ->
+    @vm.cache()?.map (o, index) ->
       found = true
       for key, value of o.attributes
         if key isnt 'id'
@@ -49,4 +30,4 @@ module.exports = class Module
           if value()?.indexOf(search) > -1
             found = false
       o.filter = found
-      m.endComputation()
+      m.endComputation()  

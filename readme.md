@@ -23,6 +23,7 @@ Protothril is the idea of a blueprint for web applications. It should include th
 * Mobile App Ready (Cordova)
 * Easy Deploy
 * Modularization of server code
+* List pagination
 
 # V2 Features
 * Datatransport with Messagepack
