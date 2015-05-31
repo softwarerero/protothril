@@ -2,6 +2,7 @@ m = require 'mithril'
 ViewModel = require '../abstract/ViewModel'
 Validation = require '../util/Validation'
 require './user.es'
+T9n = require '../util/T9n'
 
 
 module.exports = class UserVM extends ViewModel
@@ -29,13 +30,13 @@ module.exports = class UserVM extends ViewModel
 
   @current: new UserVM
   createObj: -> new UserVM
-  
+   
   @validate: (obj) ->
     msgs = []
     test = (val) -> if val then msgs.push val
-    test Validation.email obj.email(), {fieldName: 'Email'}
-    test Validation.notNull obj.nickname(), {fieldName: 'Nickname'}
-    test Validation.minLength obj.nickname(), {fieldName: 'Nickname', length: 3}
+    test Validation.email obj.email(), {fieldName: T9n.get('email')}
+    test Validation.notNull obj.nickname(), {fieldName: T9n.get('nickname')}
+    test Validation.minLength obj.nickname(), {fieldName: T9n.get('nickname'), length: 3}
     msgs
     
   filters:
