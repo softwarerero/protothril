@@ -45,8 +45,11 @@ module.exports = class Users extends Module
               attr = u.attributes
               if not u.filter
                 TR {id: 'tableRow'}, [
-                  TD(BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: attr.id()}, T9n.get 'Remove'),
-                  TD(BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: attr.id()}, T9n.get 'Edit'),
+                  TD [
+                    BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: attr.id()}, T9n.get 'Remove'
+                    SPAN ' ' 
+                    BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: attr.id()}, T9n.get 'Edit'
+                  ]
                   TD(attr.email(), class: 'email'),
                   TD(attr.nickname(), class: 'nickname')
                 ]
