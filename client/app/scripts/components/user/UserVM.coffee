@@ -15,11 +15,11 @@ module.exports = class UserVM extends ViewModel
     # create clean hash map without object prototype - ECMAScript5
     # see: http://ryanmorr.com/true-hash-maps-in-javascript/
     @attributes = Object.create(null)
+    @filter = false
     @init()
 
   init: (meters) ->
     @attributes =
-      filter: m.prop false
       id: m.prop ''
       email: m.prop '1@1.cc'
       nickname: m.prop ''

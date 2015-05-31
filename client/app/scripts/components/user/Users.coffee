@@ -43,7 +43,7 @@ module.exports = class Users extends Module
           TBODY {class: 'list'}, [
             VM.current.cache()?.map (u, index) ->
               attr = u.attributes
-              if not attr.filter()
+              if not u.filter
                 TR {id: 'tableRow'}, [
                   TD(BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: attr.id()}, T9n.get 'Remove'),
                   TD(BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: attr.id()}, T9n.get 'Edit'),
@@ -78,11 +78,11 @@ module.exports = class Users extends Module
     VM.current.cache()?.map (o, index) ->
       found = true
       for key, value of o.attributes
-        if key isnt 'filter' and key isnt 'id'
+        if key isnt 'id'
 #          console.log "value: " + value() + ' = ' + search + ': ' + value()?.indexOf(search)
           if value()?.indexOf(search) > -1
             found = false
-      o.attributes.filter found
+      o.filter = found
       m.endComputation()
 
 
