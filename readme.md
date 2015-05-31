@@ -26,3 +26,7 @@ Protothril is the idea of a blueprint for web applications. It should include th
 # V2 Features
 * Datatransport with Messagepack
 * Flexibilization of CSS (Purecss, Bootstrap, ...) with [transformers](http://lhorie.github.io/mithril-blog/when-css-lets-you-down.html)
+
+
+### Ideas
+* Alternative to private npm repos: http://fiznool.com/blog/2015/05/20/an-alternative-to-npm-private-modules/

@@ -26,4 +26,4 @@ module.exports = class Module
       INPUT {id: field, onchange: m.withAttr("value", attr[field]), value: attr[field]()}
 #      INPUT {id: field, onchange: m.withAttr("value", attr[field]), value: val}
     ]
-    
+

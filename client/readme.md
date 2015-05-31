@@ -25,6 +25,7 @@ https://github.com/jsguy/mithril.sugartags - less verbose templating
 
 ### Depdendencies
 * https://github.com/lydell/yaba - assert!
+* npm install -g napa - needef for list.js
 
 # CSS
 http://nicolasgallagher.com/pure-css-speech-bubbles/demo/

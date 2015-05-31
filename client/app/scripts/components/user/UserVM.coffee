@@ -37,5 +37,6 @@ module.exports = class UserVM extends ViewModel
     test Validation.minLength obj.nickname(), {fieldName: 'Nickname', length: 3}
     msgs
     
-
+  filters:
+    field: 'email'
 
