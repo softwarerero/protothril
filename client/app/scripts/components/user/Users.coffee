@@ -16,7 +16,6 @@ module.exports = class Users extends Module
       m.route("/user")
 
     edit: (id) =>
-      console.log 'verb: ' + @verb
       m.route("/user/#{id}")
 
     delete: (id) =>
@@ -40,19 +39,21 @@ module.exports = class Users extends Module
               TH( {'data-sort-by': 'nickname', onclick: ctrl.tableHelper.sorts}, T9n.get 'nickname')
             ]
           ]
-          TBODY {class: 'list'}, [
-            VM.current.cache()?.map (u, index) ->
-              attr = u.attributes
-              if not u.filter
-                TR {id: 'tableRow'}, [
-                  TD [
-                    BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: attr.id()}, T9n.get 'Remove'
-                    SPAN ' ' 
-                    BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: attr.id()}, T9n.get 'Edit'
+          TBODY {class: 'list'}, [ 
+#            console.log 'type: ' + typeof VM.current.cache()?.map
+#            if typeof VM.current.cache()?.map is 'function'
+              VM.current.cache()?.map (u, index) ->
+                attr = u.attributes
+                if not u.filter
+                  TR {id: 'tableRow'}, [
+                    TD [
+                      BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: attr.id()}, T9n.get 'Remove'
+                      SPAN ' ' 
+                      BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: attr.id()}, T9n.get 'Edit'
+                    ]
+                    TD(attr.email(), class: 'email'),
+                    TD(attr.nickname(), class: 'nickname')
                   ]
-                  TD(attr.email(), class: 'email'),
-                  TD(attr.nickname(), class: 'nickname')
-                ]
           ]
         ]
       ]

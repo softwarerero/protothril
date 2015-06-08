@@ -5,6 +5,7 @@ module.exports = class TableHelper
   sorts: (e) =>
     prop = e.target.getAttribute("data-sort-by")
     list = @vm.cache()
+
     if prop
       first = list[0]
       list.sort (a, b) ->
@@ -17,7 +18,7 @@ module.exports = class TableHelper
       else
         e.target.className = 'asc'
 
-
+ 
   filter: (e) =>
     search = document.getElementsByClassName('search')[0].value
     m.startComputation()

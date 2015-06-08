@@ -54,7 +54,7 @@ module.exports = class ViewModel
           
 
   save: () ->
-    request = {method: "PUT", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: @attributes}
+    request = {method: "PUT", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: @getAttributes()}
     @loadingRequest(request).then (xhr, xhrOptions) =>
       if @attributes.id()
         objs = @cache().filter (o) ->
@@ -94,8 +94,8 @@ module.exports = class ViewModel
           @msgError T9n.get 'no data'
           @goHome()
         @cloneAttributes @vm.current, xhr
- 
-        
+  
+          
   cache: () ->
     if not window.caches[@verb]
       @all (objs) ->
@@ -105,4 +105,12 @@ module.exports = class ViewModel
 
   setCache: (x) ->
     window.caches[@verb] = m.prop x
-  
+
+
+  getAttributes: () ->
+    obj = {}
+    for k, v of @attributes
+      if !!v()
+        obj[k] = v()
+    obj
+    

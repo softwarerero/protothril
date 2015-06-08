@@ -33,7 +33,7 @@ module.exports = class Message
     
     
   @clear = () ->
-    console.log 'clear'
+#    console.log 'clear'
     message ''
     clazz 'none'
     m.redraw true

@@ -21,8 +21,9 @@
   "dependencies": {
     "cookie-getter": "0.0.2",
     "elasticsearch": "^4.0.2",
+    "gulp-css": "^0.1.0",
     "lodash": "2.4.1",
-    "mithril": "0.1.32",
+    "mithril": "0.2.0",
     "mithril.sugartags": "0.0.7",
     "yaba": "^0.1.11"
   },

@@ -148,14 +148,15 @@ class Users
     el.getAll 'user', el.indexName, (error, response) ->
 #      console.log "error: " + JSON.stringify error
 #      console.log "response: " + JSON.stringify response.hits.hits
-      attrs = ['nickname', 'email', 'firstname', 'lastname']
+#      attrs = ['nickname', 'email', 'firstname', 'lastname']
       result = for hit in response.hits.hits
-#        console.log "i: " +  JSON.stringify hit._source
-        obj = { id: hit._id }
-        for attr in attrs
-          obj = Users.appendHit hit._source, obj, attr
-        obj
+        console.log "__source: " +  JSON.stringify hit._source
+#        obj = { id: hit._id }
+#        for attr in attrs
+#          obj = Users.appendHit hit._source, obj, attr
+#        obj
 #      console.log "result: " + JSON.stringify result
+        hit._source
       callback result
 
     @appendHit = (hit, obj, field) ->

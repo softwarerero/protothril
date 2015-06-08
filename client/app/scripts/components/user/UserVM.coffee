@@ -28,6 +28,7 @@ module.exports = class UserVM extends ViewModel
       lastname: m.prop ''
       password: m.prop ''
       birthday: m.prop ''
+      users: m.prop []
 
   @current: new UserVM
   createObj: -> new UserVM
