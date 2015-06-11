@@ -1,7 +1,7 @@
 Protothril is the idea of a blueprint for web applications. It should include the tools I usually work with on the frontend and backend. It is very opinionated and temporary.
  
 # Tools
-## Fronend
+## Frontend
 * Gulp
 * Mithril
 * Less
@@ -20,8 +20,8 @@ Protothril is the idea of a blueprint for web applications. It should include th
   filtering and √
   pagination.
 * Easy form creation with helpers for 
+  * select  √
   * date
-  * select
   * number
   * currency
 * User Management
