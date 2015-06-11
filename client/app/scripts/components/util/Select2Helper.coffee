@@ -12,7 +12,7 @@ module.exports = class Select2Helper
     ]
 
   Select2.config = (args) ->
-    console.log 'args: ' + JSON.stringify args
+#    console.log 'args: ' + JSON.stringify args
     (element, isInitialized) ->
       el = $(element)
       if (!isInitialized)

@@ -10,13 +10,13 @@ module.exports = class Users extends Module
   @controller: () =>
 #    VM.current.all() # preload to hava data available in view
     tableHelper: new TableHelper VM.current
- 
+
     add: () =>
       VM.current = VM.current.createObj()
-      m.route("/user")
+      m.route "/#{VM.current.verb}"   
 
-    edit: (id) =>
-      m.route("/user/#{id}")
+    edit: (id) => 
+      m.route("/#{VM.current.verb}/#{id}")
 
     delete: (id) =>
       VM.current.delete id
@@ -39,9 +39,9 @@ module.exports = class Users extends Module
               TH( {'data-sort-by': 'nickname', onclick: ctrl.tableHelper.sorts}, T9n.get 'nickname')
             ]
           ]
-          TBODY {class: 'list'}, [ 
-#            console.log 'type: ' + typeof VM.current.cache()?.map
-#            if typeof VM.current.cache()?.map is 'function'
+          TBODY {class: 'list'}, [
+            # hack because this is called sometimes when cache is resolved yet
+            if (typeof VM.current.cache()?.map) is 'function'
               VM.current.cache()?.map (u, index) ->
                 attr = u.attributes
                 if not u.filter
