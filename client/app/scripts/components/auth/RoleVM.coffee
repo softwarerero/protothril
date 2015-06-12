@@ -5,16 +5,16 @@ require './auth.es.coffee'
 T9n = require '../util/T9n'
 
 
-module.exports = class RightVM extends ViewModel
+module.exports = class RoleVM extends ViewModel
 
   constructor: () ->
-    @modelName = 'Right'
-    @vm = RightVM
-    @verb = 'right'
-    @url = 'api/right'
-    @homeRoute = '/rights'
+    @modelName = 'Role'
+    @vm = RoleVM
+    @verb = 'role'
+    @url = 'api/role'
+    @homeRoute = '/roles'
     @attributes = Object.create(null)
-#    @filter = false
+    #    @filter = false
     @init()
 
   init: (meters) ->
@@ -22,8 +22,8 @@ module.exports = class RightVM extends ViewModel
       id: m.prop ''
       name: m.prop ''
 
-  @current: new RightVM
-  createObj: -> new RightVM
+  @current: new RoleVM
+  createObj: -> new RoleVM
 
   @validate: (obj) ->
     msgs = []

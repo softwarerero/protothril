@@ -10,15 +10,12 @@ module.exports = class Menu
   # here's the view
   @view = () ->
     return m "div", 
-#      m("a[href='/todo']", {config: m.route}, 'Todo')
-#      mlink '/todo', T9n.get 'Todo'
-#      mlinkSep '/todo', 'Todo2'
 #      m('span', ' | ')
-#      mlinkSep '/dashboard', 'Dashboard'
       mlink '/users', T9n.get 'Users'
       mlinkSep '/rights', T9n.get 'Rights'
+      mlinkSep '/roles', T9n.get 'Roles'
       mlinkSep '/login', T9n.get 'Login'
-
+ 
 
   mlink = (href, txt) ->
     [m 'span', m 'a[href="' + href + '"]', {config: m.route, class: 'menu'}, txt]

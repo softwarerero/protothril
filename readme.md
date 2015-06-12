@@ -27,7 +27,7 @@ Protothril is the idea of a blueprint for web applications. It should include th
 * User Management
 * Authentification
 * Role bases authorization
-* Mobile App Ready (Cordova)
+* Mobile App Ready (Cordova - http://blog.bitovi.com/getting-started-with-cordova-in-15-minutes-or-less/)
 * Easy Deploy
 * Modularization of server code
 

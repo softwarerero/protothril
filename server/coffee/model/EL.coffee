@@ -49,6 +49,11 @@ exports.getAll = (typeName=exports.typeName, indexName=exports.indexName, callba
     if error
       console.log "error: " + error
       console.log "status: " + status
+    else
+      response = for hit in response.hits.hits
+        obj = hit._source
+        obj.id = hit._id
+        obj     
     callback(error, response)
 
 exports.getOne = (params={}, callback) ->

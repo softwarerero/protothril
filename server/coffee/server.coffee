@@ -70,65 +70,41 @@ app.post '/login', (req, res) ->
   token = jwt.sign profile, JWT_SECRET, { expiresInMinutes: 60*5 }
   res.json { token: token }
 
-#users = [
-#  {email: 'john@prototype.org.py', nickname: 'John'}
-#  {nickname: 'Hans'}
-#  {nickname: 'Mike'}
-#]
     
 app.get '/api/user', (req, res) ->
-  Users.all (result) ->
-#    res.json { users: result }
-    res.json result
+  el.getAll 'user', el.indexName, (error, response) ->
+    res.json response
 
 app.get '/api/user/:id', (req, res) ->
-#  console.log 'id1: ' + JSON.stringify JSON.stringify req.params.id
-  Users.getOne req.params.id, (result) ->
-#    res.json { users: result }
-    res.json result
+  el.getOne {typeName: 'user', q: "id:#{req.params.id}"}, (error, response) ->
+    res.json response?._source
 
 app.put '/api/user', (req, res) ->
-  console.log 'user: ' + JSON.stringify req.body
-#  attr = req.body
-#  attr._id = attr.id
-#  delete attr.id
 #  console.log 'user: ' + JSON.stringify req.body
   el.index req.body.id, 'user', el.indexName, req.body, (error, response) ->
-    console.log "error: " + error
-    console.log "response: " + JSON.stringify response
+#    console.log "error: " + error
+#    console.log "response: " + JSON.stringify response
     res.json { _id: response._id }
-#    Users.all (result) ->
-#      res.json { users: result }
-  #  users.push req.body
-#  res.json { users: users }
 
 
 app.delete '/api/user', (req, res) ->
   console.log 'delete: ' + JSON.stringify req.body
-#  users.remove req.body
-#  res.json { users: users }
   el.delete {type: 'user', index : el.indexName, id: req.body.id}, (error, response) ->
     console.log "error: " + error
     console.log "response: " + JSON.stringify response
     res.json { _id: response._id }
-#    Users.all (result) ->
-#      res.json { users: result }
-
 
 
 app.get '/api/right', (req, res) ->
-  Rights.all (result) ->
-    res.json result
+  el.getAll 'right', el.indexName, (error, response) ->
+    res.json response
 
 app.get '/api/right/:id', (req, res) ->
-  Rights.getOne req.params.id, (result) ->
-    res.json result
+  el.getOne {typeName: 'right', q: "id:#{req.params.id}"}, (error, response) ->
+    res.json response?._source
 
 app.put '/api/right', (req, res) ->
-  console.log 'right: ' + JSON.stringify req.body
   el.index req.body.id, 'right', el.indexName, req.body, (error, response) ->
-    console.log "error: " + error
-    console.log "response: " + JSON.stringify response
     res.json { _id: response._id }
 
 app.delete '/api/right', (req, res) ->
@@ -137,6 +113,22 @@ app.delete '/api/right', (req, res) ->
     res.json { _id: response._id }
 
 
+app.get '/api/role', (req, res) ->
+  el.getAll 'role', el.indexName, (error, response) ->
+    res.json response
+
+app.get '/api/role/:id', (req, res) ->
+  el.getOne {typeName: 'role', q: "id:#{req.params.id}"}, (error, response) ->
+    res.json response?._source
+
+app.put '/api/role', (req, res) ->
+  el.index req.body.id, 'role', el.indexName, req.body, (error, response) ->
+    res.json { _id: response._id }
+
+app.delete '/api/role', (req, res) ->
+  el.delete {type: 'role', index : el.indexName, id: req.body.id}, (error, response) ->
+    res.json { _id: response._id }
+    
 
 server = http.createServer(app)
 reload(server, app, 1000)
@@ -145,16 +137,6 @@ server.listen 3017, () ->
   console.log('Listening on port %d', server.address().port)
 
 el = require("./model/EL")
-#console.log 'hola: ' + el.hola
-#el.sayHola()
-#el.hola = 'hi'
-#el.sayHola()
-##console.log 'hola: ' + el.hola
-#el.ping()
-#el.count '', (err, data) ->
-#  console.log err
-#  console.log data
-#  el.sayHola()
 
 
 Array.prototype.remove = (args...) ->
@@ -165,54 +147,4 @@ Array.prototype.remove = (args...) ->
   output = output[0] if args.length is 1
   output
 
-class Users
-
-  @all: (callback) ->
-#    console.log 'getAll'
-    el.getAll 'user', el.indexName, (error, response) ->
-#      console.log "error: " + JSON.stringify error
-#      console.log "response: " + JSON.stringify response.hits.hits
-#      attrs = ['nickname', 'email', 'firstname', 'lastname']
-      result = for hit in response.hits.hits
-#        console.log "__source: " +  JSON.stringify hit._source
-#        obj = { id: hit._id }
-#        for attr in attrs
-#          obj = Users.appendHit hit._source, obj, attr
-#        obj
-#      console.log "result: " + JSON.stringify result
-        obj = hit._source
-        obj.id = hit._id
-        obj
-      callback result
-
-    @appendHit = (hit, obj, field) ->
-      if hit[field]
-        obj[field] = hit[field]
-      obj
-
-  @getOne: (id, callback) ->
-    console.log "id: " + JSON.stringify id
-    el.getOne {q: "id:#{id}"}, (error, response) ->
-      console.log "error: " + JSON.stringify error
-      console.log "response: " + JSON.stringify response
-      callback response?._source
-
-
-class Rights
-
-  @all: (callback) ->
-    el.getAll 'right', el.indexName, (error, response) ->
-      console.log "response: " + JSON.stringify response.hits.hits
-      result = for hit in response.hits.hits
-        obj = hit._source
-        obj.id = hit._id
-        obj
-      callback result
-
-  @getOne: (id, callback) ->
-    query =
-      typeName: 'right'
-      q: "id:#{id}"
-    el.getOne query, (error, response) ->
-      callback response?._source
             

@@ -11,6 +11,8 @@ users = require './components/user/Users'
 user = require './components/user/User'
 rights = require './components/auth/Rights'
 right = require './components/auth/Right'
+roles = require './components/auth/Roles'
+role = require './components/auth/Role'
 
 
 m.module(document.getElementById("menu"), {controller: menu.controller, view: menu.view})
@@ -26,6 +28,9 @@ m.route document.getElementById("my-content"), "/users",
   "/rights": rights,
   "/right": right,
   "/right/:id": right,
+  "/roles": roles,
+  "/role": role,
+  "/role/:id": role,
 
 
 

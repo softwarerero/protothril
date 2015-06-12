@@ -4,6 +4,8 @@ es =
 
   Right: 'Derecho'
   Rights: 'Derechos'
+  Role: 'Rol'
+  Roles: 'Rols'
 
   name: 'Nombre'
 
