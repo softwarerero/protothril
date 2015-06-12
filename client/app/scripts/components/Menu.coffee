@@ -9,16 +9,21 @@ module.exports = class Menu
 
   # here's the view
   @view = () ->
-    return m "div", 
+    return m "div", {class: 'pure-menu pure-menu-horizontal'}, 
 #      m('span', ' | ')
-      mlink '/users', T9n.get 'Users'
-      mlinkSep '/rights', T9n.get 'Rights'
-      mlinkSep '/roles', T9n.get 'Roles'
-      mlinkSep '/login', T9n.get 'Login'
+      m 'div', {class: 'pure-menu-list'}, [
+        mlink '/users', T9n.get 'Users'
+        mlink '/rights', T9n.get 'Rights'
+        mlink '/roles', T9n.get 'Roles'
+        mlink '/login', T9n.get 'Login' 
+#        mlinkSep '/rights', T9n.get 'Rights' 
+#        mlinkSep '/roles', T9n.get 'Roles' 
+#        mlinkSep '/login', T9n.get 'Login'
+      ]
  
 
   mlink = (href, txt) ->
-    [m 'span', m 'a[href="' + href + '"]', {config: m.route, class: 'menu'}, txt]
+    [m 'li', {class: 'pure-menu-item'}, m 'a[href="' + href + '"]', {config: m.route, class: 'pure-menu-link'}, txt]
 
   mlinkSep = (href, txt) ->
-    [m 'span', ' | ' , m 'a[href="' + href + '"]', {config: m.route, class: 'menu'}, txt]    
+    [m 'li', {class: 'pure-menu-item'}, ' | ' , m 'a[href="' + href + '"]', {config: m.route, class: 'pure-menu-link'}, txt]    
