@@ -9,6 +9,8 @@ app.message = message = require './components/Message'
 login = new (require './components/auth/Login')(app)
 users = require './components/user/Users'
 user = require './components/user/User'
+rights = require './components/auth/Rights'
+right = require './components/auth/Right'
 
 
 m.module(document.getElementById("menu"), {controller: menu.controller, view: menu.view})
@@ -21,6 +23,9 @@ m.route document.getElementById("my-content"), "/users",
   "/users": users,
   "/user": user,
   "/user/:id": user,
+  "/rights": rights,
+  "/right": right,
+  "/right/:id": right,
 
 
 

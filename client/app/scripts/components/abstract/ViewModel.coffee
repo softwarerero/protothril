@@ -42,7 +42,7 @@ module.exports = class ViewModel
 #      request = {method: "GET", url: ViewModel.conf.url + "#{@verb}", config: @xhrConfig, extract: @extract}
       request = {method: "GET", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig}
       @loadingRequest(request).then (xhr, xhrOptions) =>
-#        console.log 'xhr: ' + JSON.stringify xhr
+        console.log 'xhr: ' + JSON.stringify xhr
         objs = []
         for o in xhr
           obj = @createObj()

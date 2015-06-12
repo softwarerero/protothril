@@ -16,7 +16,7 @@ module.exports = class Menu
 #      m('span', ' | ')
 #      mlinkSep '/dashboard', 'Dashboard'
       mlink '/users', T9n.get 'Users'
-#      mlinkSep '/users', 'Users'
+      mlinkSep '/rights', T9n.get 'Rights'
       mlinkSep '/login', T9n.get 'Login'
 
 

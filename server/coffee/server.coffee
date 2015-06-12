@@ -114,6 +114,30 @@ app.delete '/api/user', (req, res) ->
 #    Users.all (result) ->
 #      res.json { users: result }
 
+
+
+app.get '/api/right', (req, res) ->
+  Rights.all (result) ->
+    res.json result
+
+app.get '/api/right/:id', (req, res) ->
+  Rights.getOne req.params.id, (result) ->
+    res.json result
+
+app.put '/api/right', (req, res) ->
+  console.log 'right: ' + JSON.stringify req.body
+  el.index req.body.id, 'right', el.indexName, req.body, (error, response) ->
+    console.log "error: " + error
+    console.log "response: " + JSON.stringify response
+    res.json { _id: response._id }
+
+app.delete '/api/right', (req, res) ->
+  console.log 'right.delete: ' + JSON.stringify req.body
+  el.delete {type: 'right', index : el.indexName, id: req.body.id}, (error, response) ->
+    res.json { _id: response._id }
+
+
+
 server = http.createServer(app)
 reload(server, app, 1000)
 
@@ -150,13 +174,15 @@ class Users
 #      console.log "response: " + JSON.stringify response.hits.hits
 #      attrs = ['nickname', 'email', 'firstname', 'lastname']
       result = for hit in response.hits.hits
-        console.log "__source: " +  JSON.stringify hit._source
+#        console.log "__source: " +  JSON.stringify hit._source
 #        obj = { id: hit._id }
 #        for attr in attrs
 #          obj = Users.appendHit hit._source, obj, attr
 #        obj
 #      console.log "result: " + JSON.stringify result
-        hit._source
+        obj = hit._source
+        obj.id = hit._id
+        obj
       callback result
 
     @appendHit = (hit, obj, field) ->
@@ -170,4 +196,23 @@ class Users
       console.log "error: " + JSON.stringify error
       console.log "response: " + JSON.stringify response
       callback response?._source
-      
+
+
+class Rights
+
+  @all: (callback) ->
+    el.getAll 'right', el.indexName, (error, response) ->
+      console.log "response: " + JSON.stringify response.hits.hits
+      result = for hit in response.hits.hits
+        obj = hit._source
+        obj.id = hit._id
+        obj
+      callback result
+
+  @getOne: (id, callback) ->
+    query =
+      typeName: 'right'
+      q: "id:#{id}"
+    el.getOne query, (error, response) ->
+      callback response?._source
+            
