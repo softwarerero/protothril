@@ -1,7 +1,6 @@
 m = require 'mithril'
 ViewModel = require '../abstract/ViewModel'
 Validation = require '../util/Validation'
-require './user.es'
 T9n = require '../util/T9n'
 
 
@@ -28,7 +27,7 @@ module.exports = class UserVM extends ViewModel
       lastname: m.prop ''
       password: m.prop ''
       birthday: m.prop ''
-      users: m.prop []
+      rols: m.prop []
 
   @current: new UserVM
   createObj: -> new UserVM

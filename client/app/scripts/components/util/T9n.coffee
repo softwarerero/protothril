@@ -53,4 +53,8 @@ module.exports = class T9n
 if not T9n.isDefined 't9nName'
   T9n.map "en", require './t9n/en'
   T9n.map "es", require './t9n/es'
+#  T9n.map "en", require '../auth/auth.en'
+  T9n.map "es", require '../auth/auth.es'
+#  T9n.map "en", require '../user/user.en'
+  T9n.map "es", require '../user/user.es'
   T9n.setLanguage 'es'

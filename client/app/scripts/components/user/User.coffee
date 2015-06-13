@@ -3,6 +3,7 @@ jQuery = require 'jquery'
 Select2Helper = require '../util/Select2Helper'
 Module = require '../abstract/Module'
 VM = require './UserVM'
+RoleVM = require '../auth/RoleVM'
 T9n = require '../util/T9n'
 
 module.exports = class User extends Module
@@ -29,13 +30,14 @@ module.exports = class User extends Module
       else
         VM.current.save()
         m.route VM.current.homeRoute
-      false  
-   
-    selectData: [{id: '1', name: "John"}, {id: '2', name: "Mary"}, {id: '3', name: "Jane"}]
-    changeUser: (id) =>
-      VM.current.attributes.users id 
-           
+      false
 
+    selectData: for role in RoleVM.current.cache()
+      role.attributes
+    changeRole: (ids) =>
+      VM.current.attributes.rols ids
+
+      
   @view: (ctrl) ->
     attr = VM.current.attributes
     [
@@ -49,8 +51,8 @@ module.exports = class User extends Module
         INPUT {type: 'date', id: 'birthday', onchange: m.withAttr("value", attr['birthday']), value: attr['birthday']()}, pickadate(this)
         LABEL {}, T9n.get 'password'
         INPUT {type: 'password', id: 'password', onchange: m.withAttr("value", attr.password), value: attr.password()}
-        m("label", "User")
-        m.component(Select2Helper, {data: ctrl.selectData, values: attr.users, onchange: ctrl.changeUser}, {multiple: 'multiple', id: 'sel1'})
+        m 'label', T9n.get 'Roles'
+        m.component(Select2Helper, {data: ctrl.selectData, values: attr.rols, onchange: ctrl.changeRole}, {multiple: 'multiple', id: 'sel1'})
         BUTTON {onclick: ctrl.save, class: 'pure-button pure-button-primary'}, T9n.get "Save"
         SPAN ' '
         BUTTON {onclick: ctrl.back, class: 'pure-button'}, T9n.get "Back"

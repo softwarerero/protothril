@@ -21,6 +21,7 @@ module.exports = class RoleVM extends ViewModel
     @attributes =
       id: m.prop ''
       name: m.prop ''
+      rights: m.prop []
 
   @current: new RoleVM
   createObj: -> new RoleVM

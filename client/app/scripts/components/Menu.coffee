@@ -3,22 +3,20 @@ T9n = require './util/T9n'
 
 module.exports = class Menu
 
-  # the controller defines what part of the model is relevant for the current page
-  # in our case, there's only one view-model that handles everything
   @controller = () ->
 
-  # here's the view
   @view = () ->
     return m "div", {class: 'pure-menu pure-menu-horizontal'}, 
-#      m('span', ' | ')
-      m 'div', {class: 'pure-menu-list'}, [
-        mlink '/users', T9n.get 'Users'
-        mlink '/rights', T9n.get 'Rights'
-        mlink '/roles', T9n.get 'Roles'
+      m 'ul', {class: 'pure-menu-list'}, [
+        m 'li', {class: 'pure-menu-item pure-menu-has-children pure-menu-allow-hover'}, [
+          m 'a', {class: 'pure-menu-link', href: '#'}, T9n.get 'Admin'
+          m 'ul', {class: 'pure-menu-children'}, [
+            mlink '/users', T9n.get 'Users'
+            mlink '/roles', T9n.get 'Roles'
+            mlink '/rights', T9n.get 'Rights'
+          ]
+        ]
         mlink '/login', T9n.get 'Login' 
-#        mlinkSep '/rights', T9n.get 'Rights' 
-#        mlinkSep '/roles', T9n.get 'Roles' 
-#        mlinkSep '/login', T9n.get 'Login'
       ]
  
 
