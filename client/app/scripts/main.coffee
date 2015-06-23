@@ -7,6 +7,7 @@ window.App.conf = app.conf = conf = require './conf'
 menu = require './components/Menu'
 app.message = message = require './components/Message'
 login = new (require './components/auth/Login')(app)
+logout = require './components/auth/Logout' 
 users = require './components/user/Users'
 user = require './components/user/User'
 rights = require './components/auth/Rights'
@@ -21,16 +22,17 @@ m.module(document.getElementById("message"), {controller: message.controller, vi
 
 m.route document.getElementById("my-content"), "/users", 
 #  "/": todo,
-  "/login": login,
-  "/users": users,
-  "/user": user,
-  "/user/:id": user,
-  "/rights": rights,
-  "/right": right,
-  "/right/:id": right,
-  "/roles": roles,
-  "/role": role,
-  "/role/:id": role,
+  "/login": login
+  "/logout": logout
+  "/users": users
+  "/user": user
+  "/user/:id": user
+  "/rights": rights
+  "/right": right
+  "/right/:id": right
+  "/roles": roles
+  "/role": role
+  "/role/:id": role
 
 
 

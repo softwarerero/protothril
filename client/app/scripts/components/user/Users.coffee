@@ -31,7 +31,7 @@ module.exports = class Users extends Module
         FORM {class: 'pure-form'}, [
           INPUT {class: 'search', placeholder: 'Search', oninput: ctrl.tableHelper.filter}
         ]
-        TABLE {class: 'pure-table'}, [
+        TABLE {class: 'pure-table pure-table-striped'}, [
           THEAD [
             TR [
               TH(BUTTON {onclick: ctrl.add, class: 'pure-button pure-button-primary'}, T9n.get 'Add'),
@@ -60,10 +60,3 @@ module.exports = class Users extends Module
     ]
 
 
-#  extract: (xhr, xhrOptions) =>
-#    console.log 'extract'
-#    if xhr.status is 401
-#      @app.message.error xhr.responseText
-#    else
-#      @app.message.success 'Got users.'
-#    xhr.response

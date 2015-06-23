@@ -22,6 +22,7 @@ module.exports = class User extends Module
     save: () ->
       attr = VM.current.attributes
       msgs = VM.validate attr
+#      console.log 'save.validate: ' + msgs 
       for m in msgs
         field = document.getElementById m.name
         field.className = 'error'
@@ -36,15 +37,15 @@ module.exports = class User extends Module
       role.attributes
     changeRole: (ids) =>
       VM.current.attributes.rols ids
-
-      
+   
+       
   @view: (ctrl) ->
     attr = VM.current.attributes
     [
       H4(T9n.get 'User')
       FORM {class: 'pure-form pure-form-stacked'}, [
         @makeInput attr, 'email'
-        @makeInput attr, 'nickname'
+        @makeInput attr, 'nickname' 
         @makeInput attr, 'firstname' 
         @makeInput attr, 'lastname'
         LABEL {}, T9n.get 'birthday'

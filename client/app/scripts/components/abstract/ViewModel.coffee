@@ -26,31 +26,40 @@ module.exports = class ViewModel
   msgError: (msg) -> ViewModel.app.message.error msg
   msgWarn: (msg) -> ViewModel.app.message.warn msg
     
-    
+     
   loadingRequest: (args) ->
     loading = document.getElementById("loading")
     loading.style.display = "block"
-    m.request(args).then (value) ->
+    m.request(args).then (value, err) ->
       loading.style.display = "none"
       value
-
-  allRequest: -> {method: "GET", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig}    
-
+      
+  stdRequest: =>
+    method: 'GET'
+    url: ViewModel.conf.url + "#{@url}"
+    config: @xhrConfig
+    extract: @extract
+    deserialize: @deserialize 
+  
+#  allRequest: -> {method: "GET", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig}    
+     
   all: (callback) ->
-    if not window.caches[@verb]
+    if not window.caches[@verb] 
 #      console.log 'url: ' + ViewModel.conf.url + "#{@url}"
 #      request = {method: "GET", url: ViewModel.conf.url + "#{@verb}", config: @xhrConfig, extract: @extract}
-      request = {method: "GET", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig}
+#      request = {method: "GET", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig}
+      request = @stdRequest()
       @loadingRequest(request).then (xhr, xhrOptions) =>
-        console.log 'xhr: ' + JSON.stringify xhr
-        objs = []
+#        console.log 'all.xhr: ' + xhr
+        objs = [] 
         for o in xhr
           obj = @createObj()
           @cloneAttributes obj, o
           objs.push obj
         @vm.current.setCache objs
+        @msgSuccess 'Got data.' 
         if callback
-          callback(objs)
+          callback(objs)  
           
 
   save: () ->
@@ -111,6 +120,42 @@ module.exports = class ViewModel
     obj = {}
     for k, v of @attributes
       if !!v()
-        obj[k] = v()
+        obj[k] = v() 
     obj
+ 
+  extract: (xhr, xhrOptions) ->
+#    console.log 'extract.xhr: ' + xhr
+#    console.log 'xhrOptions: ' + JSON.stringify xhrOptions
+    if xhr.status is 401  
+#      @msgError xhr.response.error
+      response = JSON.parse xhr.response
+#      console.log 'response: ' + JSON.stringify response.error
+      ViewModel.app.message.error T9n.get response.error  
+      loading.style.display = "none"
+      m.route '/login'
+      xhr
+    xhr.response
+
+  deserialize:  (xhr, xhrOptions) ->
+#    console.log 'deserialize.xhr: ' + xhr
+#    console.log 'deserialize.xhrOptions: ' + xhrOptions
+#    console.log 'response: ' + JSON.stringify xhr.response
+#    console.log 'error: ' + JSON.stringify xhr.error
+#    console.log 'error: ' + JSON.stringify xhr.response.error
+#    if xhr.status is 401
+#      @msgError xhr.response.error
+#      response = JSON.parse xhr.response
+#      response = xhr.response
+#      console.log 'response: ' + response
+#      console.log 'response: ' + response.error
+#      ViewModel.app.message.error T9n.get response.error
+#      loading.style.display = "none"
+#      m.route("/login")
+#    response = JSON.parse xhr.response
+#    if response?.error then response.error else response
+#    JSON.parse xhr.response
+#    response?.error
+    JSON.parse xhr
+    
+    
     

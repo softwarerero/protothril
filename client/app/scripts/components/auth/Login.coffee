@@ -1,32 +1,30 @@
 m = require 'mithril'
 Module = require '../abstract/Module'
+T9n = require '../util/T9n'
+RoleVM = require '../auth/RoleVM'
+UserVM = require '../user/UserVM'
 
 module.exports = class Login extends Module
 
-  username = m.prop('john.doe')
-  password = m.prop('foobar')
-  loggedIn = m.prop(false)
+  @loggedIn: -> !!window.sessionStorage.token
+  @username: -> window.sessionStorage.username
+  email = m.prop('2121@1.cc')
+  password = m.prop('123')
+  @profile = null
 
   constructor: (@app) ->
-    super(@app)
+    super(@app) 
     
-  controller: () ->
-#    super
+  controller: () =>
     login: () =>
-      data = {username: username(), password: password()}
-#      console.log JSON.stringify data
-#      xhrConfig = (xhr) ->
-#        xhr.setRequestHeader("withCredentials", "true")
-#        xhr.withCredentials = true
-#      request = {method: "POST", background: false, url: url, data: data, extract: extract, config: xhrConfig}
+      data = {email: email(), password: password()}
       url = Login.conf.url + 'login'
-      request = {method: "POST", background: false, url: url, data: data, extract: extract}
+      request = {method: "POST", background: false, url: url, data: data, extract: @extract}
       m.request(request).then(log) #.then(authorized)
 
   view: (ctrl) ->
-    [
-      m('p', loggedIn())
-      m("input", {onchange: m.withAttr("value", username), value: username()})
+    [ 
+      m("input", {onchange: m.withAttr("value", email), value: email()})
       m('br')
       m("input", {type: 'password', onchange: m.withAttr("value", password), value: password()})
       m('br')
@@ -35,30 +33,53 @@ module.exports = class Login extends Module
     
     
   log = (xhr, err) ->
-#    console.log 'log xhr: ' + JSON.stringify xhr
-#    console.log('log err: ' + err)
+#    console.log 'log xhr: ' + JSON.stringify xhr 
+#    console.log('log err: ' + err)  
     xhr
 
       
-  extract = (xhr, xhrOptions) =>
+  extract: (xhr, xhrOptions) =>
     console.log 'xhr: ' + JSON.stringify xhr
-#    console.log 'xhrOptions: ' + JSON.stringify xhrOptions
-#    console.log 'status: ' + xhr.status
-    
-#    console.log 'responseText: ' + JSON.stringify xhr.responseText
+    console.log 'xhrOptions: ' + JSON.stringify xhrOptions
+
     if xhr.status is 401
       delete window.sessionStorage.token
-      @msgError xhr.responseText
-      loggedIn false
-      
+      delete window.sessionStorage.username
+      Login.msgError xhr.responseText
+      Login.loggedIn false
+      Login.profile = null
     else if xhr.status > 200
-#      delete window.sessionStorage.token
-      @msgError 'Problem: ' + xhr.status
-      loggedIn false
+      delete window.sessionStorage.token
+      delete window.sessionStorage.username
+      Login.msgError 'Problem: ' + xhr.status
+      Login.loggedIn false
+      Login.profile = null
     else
-#      console.log 'token: ' + JSON.parse(xhr.response).token
-      window.sessionStorage.token = JSON.parse(xhr.response).token 
-      @msgSuccess 'You are logged in successfully.'
-      loggedIn true
+      response = JSON.parse(xhr.response)
+      window.sessionStorage.token = response.token
+      console.log 'profile: ' + JSON.stringify response.profile
+      window.sessionStorage.username = response.profile.nickname || response.profile.email
+      Login.profile = response.profile
+      Login.hasRole 'sdfd'
+      
+      Login.msgSuccess T9n.get 'You are logged in successfully'
+      Login.loggedIn true
       xhr.responseText
-#    JSON.stringify xhr
+
+      
+  @hasRole: (name) ->
+    roles = RoleVM.current.cache()
+    console.log 'name: ' + JSON.stringify name
+    console.log 'roles: ' + JSON.stringify roles
+    idForName = null
+    for role in roles
+      console.log 'attributes: ' + JSON.stringify role.attributes
+      console.log 'name: ' + JSON.stringify role.attributes.name
+      console.log 'is: ' + (role.attributes.name() is name)
+      if role.attributes.name() is name
+        idForName = role.attributes.id()
+    console.log 'idForName: ' + idForName
+    if idForName
+      users = UserVM.current.cache()
+      console.log 'users: ' + JSON.stringify users
+    idForName is true

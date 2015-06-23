@@ -14,17 +14,17 @@ expressJwt = require('express-jwt')
 jwt = require('jsonwebtoken')
 # We are going to protect /api routes with JWT
 JWT_SECRET = 'SUPER SECRET STRING'
-#app.use '/api', expressJwt({secret: JWT_SECRET}).unless({path: ['/login']})
-#app.use (err, req, res, next) ->
-#  if err.name is 'UnauthorizedError' 
-#    console.log 401
-#    res.status(401).send('invalid token...')
+app.use '/api', expressJwt({secret: JWT_SECRET}).unless({path: ['/login']})
+app.use (err, req, res, next) ->
+  if err.name is 'UnauthorizedError' 
+    console.log 401
+    res.status(401).json {error: 'invalid token'}
+#    res.status(401).send 'invalid token'
+    
 
 #session = require('express-session')
 #app.use session({name: 'clasiserv.sid', secret: 'esta sessión no tiene calefacción'})
 reload = require('reload')
-#less = require('less-middleware')
-#app.use(require("connect-assets")({paths: ["./client/coffee"]}))
 
 #everyauth = require('everyauth')
 #app.use everyauth.middleware(app)
@@ -47,32 +47,30 @@ app.use(express.static('./public'))
 
 app.post '/login', (req, res) ->
   console.log 'login'
-#  console.log req.body
-#  res.send('ok')
-#  res
-#    .cookie('username', req.params.user)
-#  .res.clearCookie('username') # clearing a cookie
-# Cookie: user=tobi.CP7AWaXDfAKIRfH49dQzKJx7sKzzSoPq7/AcBBRVwlI3
-#req.signedCookies.user
-#    .cookie('username', 'whoever', {expires: new Date() + 99999, maxAge: 99999, httpOnly: true, signed: true})
-#    .cookie('username', 'whoever', {expires: new Date() + 99999, maxAge: 99999, httpOnly: false, signed: true})
-#    .send({msg: 'This is CORS-enabled for all origins!'})
-  if (!(req.body.username is 'john.doe' and req.body.password is 'foobar')) 
-    res.send(401, 'Wrong user or password')
-    return
-  
-  profile = 
-    firstname: 'John',
-    lastname: 'Doe',
-    email: 'john@doe.com',
-    _id: 123
-  # We are sending the profile inside the token
-  token = jwt.sign profile, JWT_SECRET, { expiresInMinutes: 60*5 }
-  res.json { token: token }
+#  if (!(req.body.username is 'john.doe' and req.body.password is 'foobar')) 
+#    res.status(401).send {error: 'Wrong credentials'}
+#    return
+
+  el.getOne {typeName: 'user', q: "username:#{req.body.username} password:#{req.body.password}"}, (error, response) ->
+    console.log 'el.error: ' + error
+    console.log 'el.response: ' + JSON.stringify response
+#    res.json response?._source
+    
+    profile = response._source
+    delete profile.password
+#    profile = 
+#      firstname: 'John',
+#      lastname: 'Doe',
+#      email: 'john@doe.com',
+#      _id: 123
+    # We are sending the profile inside the token
+    token = jwt.sign profile, JWT_SECRET, { expiresInMinutes: 60*5 }
+    res.json { profile: profile, token: token }
 
     
 app.get '/api/user', (req, res) ->
   el.getAll 'user', el.indexName, (error, response) ->
+#    console.log JSON.stringify response
     res.json response
 
 app.get '/api/user/:id', (req, res) ->
