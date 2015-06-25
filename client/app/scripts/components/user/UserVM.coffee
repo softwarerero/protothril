@@ -18,7 +18,7 @@ module.exports = class UserVM extends ViewModel
     @filter = false
     @init()
 
-  init: (meters) ->
+  init: () ->
     @attributes =
       id: m.prop ''
       email: m.prop '1@1.cc'

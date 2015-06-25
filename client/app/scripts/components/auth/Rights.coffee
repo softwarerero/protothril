@@ -38,16 +38,15 @@ module.exports = class Rights extends Module
           TBODY {class: 'list'}, [
             # hack because this is called sometimes when cache is resolved yet
             if (typeof VM.current.cache()?.map) is 'function'
-              VM.current.cache()?.map (u, index) ->
-                attr = u.attributes
-                if not u.filter
+              VM.current.cache()?.map (obj, index) ->
+                if not obj.filter
                   TR {id: 'tableRow'}, [
                     TD [
-                      BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: attr.id()}, T9n.get 'Remove'
+                      BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: obj.id}, T9n.get 'Remove'
                       SPAN ' '
-                      BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: attr.id()}, T9n.get 'Edit'
+                      BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: obj.id}, T9n.get 'Edit'
                     ]
-                    TD(attr.name(), class: 'name'),
+                    TD(obj.name, class: 'name'),
                   ]
           ]
         ]

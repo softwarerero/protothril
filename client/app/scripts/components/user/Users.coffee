@@ -33,26 +33,30 @@ module.exports = class Users extends Module
         ]
         TABLE {class: 'pure-table pure-table-striped'}, [
           THEAD [
-            TR [
-              TH(BUTTON {onclick: ctrl.add, class: 'pure-button pure-button-primary'}, T9n.get 'Add'),
-              TH( {'data-sort-by': 'email', onclick: ctrl.tableHelper.sorts}, T9n.get 'email'),
+            TR [  
+#              TH(BUTTON {onclick: ctrl.add, class: 'pure-button pure-button-primary'}, T9n.get 'Add'),
+              TH( I {class: 'fa fa-plus action th-action', onclick: m.withAttr('dataid', ctrl.add)} )
+              TH( {'data-sort-by': 'email', onclick: ctrl.tableHelper.sorts}, T9n.get 'email')
               TH( {'data-sort-by': 'nickname', onclick: ctrl.tableHelper.sorts}, T9n.get 'nickname')
             ]
           ]
           TBODY {class: 'list'}, [
             # hack because this is called sometimes when cache is resolved yet
+#            console.log JSON.stringify VM.current.cache()
             if (typeof VM.current.cache()?.map) is 'function'
-              VM.current.cache()?.map (u, index) ->
-                attr = u.attributes
-                if not u.filter
+#              console.log 'users: ' + JSON.stringify VM.current.cache()
+              VM.current.cache()?.map (obj, index) ->
+                if not obj.filter
                   TR {id: 'tableRow'}, [
                     TD [
-                      BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: attr.id()}, T9n.get 'Remove'
-                      SPAN ' ' 
-                      BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: attr.id()}, T9n.get 'Edit'
+#                      BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: obj.id}, T9n.get 'Remove'
+                      I {class: 'fa fa-pencil-square-o action', onclick: m.withAttr('dataid', ctrl.edit), dataid: obj.id}
+                      SPAN ' '
+#                      BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: obj.id}, T9n.get 'Edit'
+                      I {class: 'fa fa-trash action', onclick: m.withAttr('dataid', ctrl.delete), dataid: obj.id}
                     ]
-                    TD(attr.email(), class: 'email'),
-                    TD(attr.nickname(), class: 'nickname')
+                    TD(obj.email, class: 'email'),
+                    TD(obj.nickname, class: 'nickname')
                   ]
           ]
         ]

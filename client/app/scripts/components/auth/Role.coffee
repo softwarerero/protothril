@@ -35,20 +35,21 @@ module.exports = class Role extends Module
 
 #    selectData: [{id: '1', name: "John"}, {id: '2', name: "Mary"}, {id: '3', name: "Jane"}]
 #    selectData: RightVM.current.cache()
-    selectData: for right in RightVM.current.cache()
-      right.attributes
+#    selectData: for right in RightVM.current.cache()
+#      right.attributes
+    selectData: -> RightVM.current.cache()
     changeRights: (ids) =>
       VM.current.attributes.rights ids
 
   @view: (ctrl) ->
-    console.log 'ctrl.selectData: ' + JSON.stringify ctrl.selectData
+#    console.log 'ctrl.selectData: ' + JSON.stringify ctrl.selectData
     attr = VM.current.attributes
     [
       H4(T9n.get 'Role')
       FORM {class: 'pure-form pure-form-stacked'}, [
         @makeInput attr, 'name'
         m 'label', T9n.get 'Rights'
-        m.component(Select2Helper, {data: ctrl.selectData, values: attr.rights, onchange: ctrl.changeRights}, {multiple: 'multiple', id: 'sel1'})
+        m.component(Select2Helper, {data: ctrl.selectData(), values: attr.rights(), onchange: ctrl.changeRights}, {multiple: 'multiple', id: 'sel1'})
         BUTTON {onclick: ctrl.save, class: 'pure-button pure-button-primary'}, T9n.get "Save"
         SPAN ' '
         BUTTON {onclick: ctrl.back, class: 'pure-button'}, T9n.get "Back"
