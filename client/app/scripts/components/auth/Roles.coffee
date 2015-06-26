@@ -31,7 +31,7 @@ module.exports = class Roles extends Module
         TABLE {class: 'pure-table'}, [
           THEAD [
             TR [
-              TH(BUTTON {onclick: ctrl.add, class: 'pure-button pure-button-primary'}, T9n.get 'Add'),
+              TH( I {class: 'fa fa-plus action th-action', onclick: m.withAttr('dataid', ctrl.add)} )
               TH( {'data-sort-by': 'name', onclick: ctrl.tableHelper.sorts}, T9n.get 'name'),
             ]
           ]
@@ -43,9 +43,9 @@ module.exports = class Roles extends Module
               if not obj.filter
                 TR {id: 'tableRow'}, [
                   TD [
-                    BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: obj.id}, T9n.get 'Remove'
+                    I {class: 'fa fa-pencil-square-o action', onclick: m.withAttr('dataid', ctrl.edit), dataid: obj.id}
                     SPAN ' '
-                    BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: obj.id}, T9n.get 'Edit'
+                    I {class: 'fa fa-trash action', onclick: m.withAttr('dataid', ctrl.delete), dataid: obj.id}
                   ]
                   TD(obj.name, class: 'name'),
                 ]

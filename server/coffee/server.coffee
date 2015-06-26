@@ -75,14 +75,16 @@ app.get '/api/user', (req, res) ->
 
 app.get '/api/user/:id', (req, res) ->
   el.getOne {typeName: 'user', q: "id:#{req.params.id}"}, (error, response) ->
-    res.json response?._source
+#    res.json response?._source
+    res.json { id: response._id, obj: response?._source }
 
 app.put '/api/user', (req, res) ->
 #  console.log 'user: ' + JSON.stringify req.body
   el.index req.body.id, 'user', el.indexName, req.body, (error, response) ->
 #    console.log "error: " + error
 #    console.log "response: " + JSON.stringify response
-    res.json { _id: response._id }
+#    res.json { _id: response._id }
+    res.json { id: response._id, obj: req.body }
 
 
 app.delete '/api/user', (req, res) ->
@@ -99,7 +101,8 @@ app.get '/api/right', (req, res) ->
 
 app.get '/api/right/:id', (req, res) ->
   el.getOne {typeName: 'right', q: "id:#{req.params.id}"}, (error, response) ->
-    res.json response?._source
+#    res.json response?._source
+    res.json { id: response._id, obj: response?._source }
 
 app.put '/api/right', (req, res) ->
   el.index req.body.id, 'right', el.indexName, req.body, (error, response) ->
@@ -121,12 +124,17 @@ app.get '/api/role', (req, res) ->
     res.json response
 
 app.get '/api/role/:id', (req, res) ->
-  el.getOne {typeName: 'role', q: "id:#{req.params.id}"}, (error, response) ->
-    res.json response?._source
+  console.log "id: " + req.params.id
+  el.getOne {typeName: 'role', q: "_id:#{req.params.id}"}, (error, response) ->
+#    console.log "error: " + JSON.stringify error
+#    console.log "response: " + JSON.stringify response
+#    res.json response?._source
+    res.json { id: response._id, obj: response?._source }
 
 app.put '/api/role', (req, res) ->
   el.index req.body.id, 'role', el.indexName, req.body, (error, response) ->
-    res.json { _id: response._id }
+#    res.json { _id: response._id }
+    res.json { id: response._id, obj: req.body }
 
 app.delete '/api/role', (req, res) ->
   el.delete {type: 'role', index : el.indexName, id: req.body.id}, (error, response) ->

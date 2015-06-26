@@ -35,30 +35,22 @@ module.exports = class ViewModel
   all: (callback) ->
     if not window.caches[@verb] 
       @loadingRequest(@stdRequest()).then (xhr, xhrOptions) =>
-#        objs = xhr
-        console.log 'xhr: ' + JSON.stringify xhr
-        objs = Object.create(null)
-        for obj in xhr
-          objs[obj.id] = obj
-        @vm.current.setCache objs
-        if callback
-          callback(objs)
+        if xhr
+          console.log 'xhr: ' + JSON.stringify xhr
+          objs = Object.create(null)
+          for obj in xhr
+            objs[obj.id] = obj
+          @vm.current.setCache objs
+          if callback
+            callback(objs)
           
 
   save: () ->
     request = {method: "PUT", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: @getAttributes()}
     @loadingRequest(request).then (xhr, xhrOptions) =>
-      console.log 'save.xhr: ' + JSON.stringify xhr
+#      console.log 'save.xhr: ' + JSON.stringify xhr
       @cache()[xhr.id] = xhr.obj
-      console.log 'save.@cache(): ' + JSON.stringify @cache()
-#      if @attributes.id()
-#        objs = @cache().filter (o) ->
-#          o.id isnt xhr._id
-#        objs.push @vm.current.getAttributes()
-#        @vm.current.setCache objs
-#      else
-#        @vm.current.attributes.id xhr._id
-#        @cache().push @vm.current.getAttributes()
+#      console.log 'save.@cache(): ' + JSON.stringify @cache()
       @msgSuccess T9n.get 'crud.saved', {modelName: @modelName}
     false
  
@@ -67,9 +59,6 @@ module.exports = class ViewModel
     data = {id: id}
     request = {method: "DELETE", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: data}
     @loadingRequest(request).then (xhr, xhrOptions) =>
-#      objs = @cache().filter (o) ->
-#        o.id isnt xhr._id
-#      @vm.current.setCache objs
       delete @cache()[xhr.id]
       @msgSuccess T9n.get 'crud.deleted', {modelName: @modelName}
     false    
@@ -78,22 +67,19 @@ module.exports = class ViewModel
   getForId: (id) =>
     if not id then return
     objs = @cache()
-    console.log 'getForId: ' + JSON.stringify objs
-    if objs?.length
-      objs = objs.filter (o) ->
-        o.id is id
-      @cloneAttributes @vm.current, objs[0]
+    if objs[id]
+      @cloneAttributes @vm.current, objs[id]
     else
       console.log 'GET: ' + ViewModel.conf.url + "#{@url}/#{id}"
       request = {method: "GET", url: ViewModel.conf.url + "#{@url}/#{id}", config: @xhrConfig}
       @loadingRequest(request).then (xhr, xhrOptions) =>
-        console.log 'xhr: ' + JSON.stringify xhr
         if not xhr
           @msgError T9n.get 'no data'
           @goHome()
-        @cloneAttributes @vm.current, xhr
-        objs[xhr.id] = xhr
-#        @vm.current = xhr
+        else
+          @cloneAttributes @vm.current, xhr.obj
+          @vm.current.id = xhr.id
+          objs[xhr.id] = xhr.obj 
   
           
   cache: () ->
@@ -121,8 +107,9 @@ module.exports = class ViewModel
         obj.attributes[key]?(value)
     obj
 
-
+  
   extract: (xhr, xhrOptions) ->
+    console.log 'xhr.status: ' + xhr.status
     if xhr.status is 401  
       response = JSON.parse xhr.response
       ViewModel.app.message.error T9n.get response.error  

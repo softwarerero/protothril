@@ -17,7 +17,7 @@ module.exports = class RoleVM extends ViewModel
     #    @filter = false
     @init()
 
-  init: (meters) ->
+  init: () ->
     @attributes =
       id: m.prop ''
       name: m.prop ''

@@ -34,23 +34,13 @@ module.exports = class Users extends Module
         TABLE {class: 'pure-table pure-table-striped'}, [
           THEAD [
             TR [  
-#              TH(BUTTON {onclick: ctrl.add, class: 'pure-button pure-button-primary'}, T9n.get 'Add'),
               TH( I {class: 'fa fa-plus action th-action', onclick: m.withAttr('dataid', ctrl.add)} )
               TH( {'data-sort-by': 'email', onclick: ctrl.tableHelper.sorts}, T9n.get 'email')
               TH( {'data-sort-by': 'nickname', onclick: ctrl.tableHelper.sorts}, T9n.get 'nickname')
             ]
           ]
           TBODY {class: 'list'}, [
-            # hack because this is called sometimes when cache is resolved yet
-#            console.log JSON.stringify VM.current.cache()
-#            console.log 'users2: ' + JSON.stringify VM.current.cache()
-#            console.log 'typeof: ' + typeof VM.current.cache()
             for id, obj of VM.current.cache()
-              console.log 'users.obj: ' + JSON.stringify obj
-#              console.log JSON.stringify obj
-#            if (typeof VM.current.cache()?.map) is 'function'
-#              console.log 'users: ' + JSON.stringify VM.current.cache()
-#              VM.current.cache()?.map (obj, index) ->
               if not obj.filter
                 TR {id: 'tableRow'}, [
                   TD [

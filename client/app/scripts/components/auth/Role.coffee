@@ -43,7 +43,8 @@ module.exports = class Role extends Module
 
   @view: (ctrl) ->
 #    console.log 'ctrl.selectData: ' + JSON.stringify ctrl.selectData
-    attr = VM.current.attributes
+    attr = VM.current.attributes   
+    console.log 'attr: ' + JSON.stringify attr
     [
       H4(T9n.get 'Role')
       FORM {class: 'pure-form pure-form-stacked'}, [
