@@ -36,7 +36,7 @@ module.exports = class ViewModel
     if not window.caches[@verb] 
       @loadingRequest(@stdRequest()).then (xhr, xhrOptions) =>
         if xhr
-          console.log 'xhr: ' + JSON.stringify xhr
+#          console.log 'xhr: ' + JSON.stringify xhr
           objs = Object.create(null)
           for obj in xhr
             objs[obj.id] = obj
@@ -109,7 +109,7 @@ module.exports = class ViewModel
 
   
   extract: (xhr, xhrOptions) ->
-    console.log 'xhr.status: ' + xhr.status
+#    console.log 'xhr.status: ' + xhr.status
     if xhr.status is 401  
       response = JSON.parse xhr.response
       ViewModel.app.message.error T9n.get response.error  

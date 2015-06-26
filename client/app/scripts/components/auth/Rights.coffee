@@ -41,7 +41,6 @@ module.exports = class Rights extends Module
 #              VM.current.cache()?.map (obj, index) ->
             for id, obj of VM.current.cache()
               if not obj.filter
-                console.log 'name: ' + obj.name
                 TR {id: 'tableRow'}, [
                   TD [
                     I {class: 'fa fa-pencil-square-o action', onclick: m.withAttr('dataid', ctrl.edit), dataid: obj.id}

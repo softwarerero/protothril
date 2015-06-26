@@ -74,7 +74,7 @@ app.get '/api/user', (req, res) ->
     res.json response
 
 app.get '/api/user/:id', (req, res) ->
-  el.getOne {typeName: 'user', q: "id:#{req.params.id}"}, (error, response) ->
+  el.getOne {typeName: 'user', q: "_id:#{req.params.id}"}, (error, response) ->
 #    res.json response?._source
     res.json { id: response._id, obj: response?._source }
 
@@ -100,7 +100,7 @@ app.get '/api/right', (req, res) ->
     res.json response
 
 app.get '/api/right/:id', (req, res) ->
-  el.getOne {typeName: 'right', q: "id:#{req.params.id}"}, (error, response) ->
+  el.getOne {typeName: 'right', q: "_id:#{req.params.id}"}, (error, response) ->
 #    res.json response?._source
     res.json { id: response._id, obj: response?._source }
 
