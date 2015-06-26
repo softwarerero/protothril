@@ -103,7 +103,12 @@ app.get '/api/right/:id', (req, res) ->
 
 app.put '/api/right', (req, res) ->
   el.index req.body.id, 'right', el.indexName, req.body, (error, response) ->
-    res.json { _id: response._id }
+    console.log "req.body: " + JSON.stringify req.body
+    console.log "response: " + JSON.stringify response
+#    res.json { _id: response._id }
+#    obj = req.body
+#    obj._id = response._id
+    res.json { id: response._id, obj: req.body }
 
 app.delete '/api/right', (req, res) ->
   console.log 'right.delete: ' + JSON.stringify req.body

@@ -21,7 +21,6 @@ module.exports = class Roles extends Module
       m.redraw()
 
 
-      
   @view: (ctrl) ->
     [
       H4(T9n.get 'Roles')
@@ -38,17 +37,18 @@ module.exports = class Roles extends Module
           ]
           TBODY {class: 'list'}, [
             # hack because this is called sometimes when cache is resolved yet
-            if (typeof VM.current.cache()?.map) is 'function'
-              VM.current.cache()?.map (obj, index) ->
-                if not obj.filter
-                  TR {id: 'tableRow'}, [
-                    TD [
-                      BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: obj.id}, T9n.get 'Remove'
-                      SPAN ' '
-                      BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: obj.id}, T9n.get 'Edit'
-                    ]
-                    TD(obj.name, class: 'name'),
+#            if (typeof VM.current.cache()?.map) is 'function'
+#              VM.current.cache()?.map (obj, index) ->
+            for id, obj of VM.current.cache()                
+              if not obj.filter
+                TR {id: 'tableRow'}, [
+                  TD [
+                    BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: obj.id}, T9n.get 'Remove'
+                    SPAN ' '
+                    BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: obj.id}, T9n.get 'Edit'
                   ]
+                  TD(obj.name, class: 'name'),
+                ]
           ]
         ]
       ]

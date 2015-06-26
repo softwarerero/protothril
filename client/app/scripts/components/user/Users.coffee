@@ -43,21 +43,24 @@ module.exports = class Users extends Module
           TBODY {class: 'list'}, [
             # hack because this is called sometimes when cache is resolved yet
 #            console.log JSON.stringify VM.current.cache()
-            if (typeof VM.current.cache()?.map) is 'function'
+#            console.log 'users2: ' + JSON.stringify VM.current.cache()
+#            console.log 'typeof: ' + typeof VM.current.cache()
+            for id, obj of VM.current.cache()
+              console.log 'users.obj: ' + JSON.stringify obj
+#              console.log JSON.stringify obj
+#            if (typeof VM.current.cache()?.map) is 'function'
 #              console.log 'users: ' + JSON.stringify VM.current.cache()
-              VM.current.cache()?.map (obj, index) ->
-                if not obj.filter
-                  TR {id: 'tableRow'}, [
-                    TD [
-#                      BUTTON {onclick: m.withAttr('dataid', ctrl.delete), class: 'pure-button', dataid: obj.id}, T9n.get 'Remove'
-                      I {class: 'fa fa-pencil-square-o action', onclick: m.withAttr('dataid', ctrl.edit), dataid: obj.id}
-                      SPAN ' '
-#                      BUTTON {onclick: m.withAttr('dataid', ctrl.edit), class: 'pure-button', dataid: obj.id}, T9n.get 'Edit'
-                      I {class: 'fa fa-trash action', onclick: m.withAttr('dataid', ctrl.delete), dataid: obj.id}
-                    ]
-                    TD(obj.email, class: 'email'),
-                    TD(obj.nickname, class: 'nickname')
+#              VM.current.cache()?.map (obj, index) ->
+              if not obj.filter
+                TR {id: 'tableRow'}, [
+                  TD [
+                    I {class: 'fa fa-pencil-square-o action', onclick: m.withAttr('dataid', ctrl.edit), dataid: obj.id}
+                    SPAN ' '
+                    I {class: 'fa fa-trash action', onclick: m.withAttr('dataid', ctrl.delete), dataid: obj.id}
                   ]
+                  TD(obj.email, class: 'email'),
+                  TD(obj.nickname, class: 'nickname')
+                ]
           ]
         ]
       ]

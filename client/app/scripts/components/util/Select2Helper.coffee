@@ -9,10 +9,11 @@ module.exports = class Select2Helper
 #      if (typeof args.data?.map) is 'object'
 #      console.log 'args: ' + JSON.stringify args
 #      console.log 'type: ' + typeof args.data
-      args.data.map (item) ->
+#      args.data.map (item) ->
+      for id, obj of args.data
 #        console.log 'item: ' + item
-        selected = if item.id in args.values then 'selected' else ''
-        m "option", {value: item.id, selected: selected}, item.name
+        selected = if obj.id in args.values then 'selected' else ''
+        m "option", {value: obj.id, selected: selected}, obj.name
     ]
  
   Select2.config = (args) ->
