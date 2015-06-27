@@ -39,8 +39,8 @@ module.exports = class Login extends Module
 
       
   extract: (xhr, xhrOptions) =>
-    console.log 'xhr: ' + JSON.stringify xhr
-    console.log 'xhrOptions: ' + JSON.stringify xhrOptions
+#    console.log 'xhr: ' + JSON.stringify xhr
+#    console.log 'xhrOptions: ' + JSON.stringify xhrOptions
 
     if xhr.status is 401
       delete window.sessionStorage.token
@@ -57,13 +57,14 @@ module.exports = class Login extends Module
     else
       response = JSON.parse(xhr.response)
       window.sessionStorage.token = response.token
-      console.log 'profile: ' + JSON.stringify response.profile
+#      console.log 'profile: ' + JSON.stringify response.profile
       window.sessionStorage.username = response.profile.nickname || response.profile.email
       Login.profile = response.profile
       Login.hasRole 'sdfd'
       
       Login.msgSuccess T9n.get 'You are logged in successfully'
       Login.loggedIn true
+      m.route @app.conf.defaultRoute
       xhr.responseText
 
       

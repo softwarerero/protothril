@@ -38,15 +38,15 @@ module.exports = class User extends Module
 #      role
     selectData: -> RoleVM.current.cache()
     changeRole: (ids) =>
-      console.log 'changeRole: ' + ids
+#      console.log 'changeRole: ' + ids
       VM.current.attributes.rols ids
    
        
   @view: (ctrl) ->
     attr = VM.current.attributes
-    console.log 'attr: ' + JSON.stringify attr
-    console.log 'allrols: ' + JSON.stringify RoleVM.current.cache()
-    console.log 'rols: ' + JSON.stringify attr.rols
+#    console.log 'attr: ' + JSON.stringify attr
+#    console.log 'allrols: ' + JSON.stringify RoleVM.current.cache()
+#    console.log 'rols: ' + JSON.stringify attr.rols
     [
       H4(T9n.get 'User')
       FORM {class: 'pure-form pure-form-stacked'}, [

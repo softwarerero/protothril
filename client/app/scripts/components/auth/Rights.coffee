@@ -36,9 +36,6 @@ module.exports = class Rights extends Module
             ]
           ]
           TBODY {class: 'list'}, [
-            # hack because this is called sometimes when cache is resolved yet
-#            if (typeof VM.current.cache()?.map) is 'function'
-#              VM.current.cache()?.map (obj, index) ->
             for id, obj of VM.current.cache()
               if not obj.filter
                 TR {id: 'tableRow'}, [
