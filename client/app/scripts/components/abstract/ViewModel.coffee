@@ -36,14 +36,14 @@ module.exports = class ViewModel
     if not window.caches[@verb] 
       @loadingRequest(@stdRequest()).then (xhr, xhrOptions) =>
         if xhr
-#          console.log 'xhr: ' + JSON.stringify xhr
+          console.log 'xhr: ' + JSON.stringify xhr
           objs = Object.create(null)
           for obj in xhr
             objs[obj.id] = obj
           @vm.current.setCache objs
           if callback
             callback(objs)
-          
+           
 
   save: () ->
     request = {method: "PUT", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: @getAttributes()}

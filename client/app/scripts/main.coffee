@@ -1,6 +1,5 @@
 m = require 'mithril'
 
-# Component Classes
 # Main namespace
 window.App = app = {} 
 window.App.conf = app.conf = conf = require './conf'
@@ -15,13 +14,10 @@ right = require './components/auth/Right'
 roles = require './components/auth/Roles'
 role = require './components/auth/Role'
 
-
-m.module(document.getElementById("menu"), {controller: menu.controller, view: menu.view})
 m.module(document.getElementById("message"), {controller: message.controller, view: message.view})
-
+m.module(document.getElementById("menu"), {controller: menu.controller, view: menu.view})
 
 m.route document.getElementById("my-content"), "/users", 
-#  "/": todo,
   "/login": login
   "/logout": logout
   "/users": users
@@ -35,10 +31,6 @@ m.route document.getElementById("my-content"), "/users",
   "/role/:id": role
 
 
-
-#$ document
-#  .ready ->
-#    m.module $('#my-content')[0], app
 
 #process.on 'uncaughtException', (err) ->
 #  log.critical('uncaught', err)

@@ -35,3 +35,10 @@ module.exports = class RightVM extends ViewModel
         msgs.push obj
     test 'name', Validation.notNull obj.name(), {fieldName: T9n.get('name')}
     msgs
+
+  forName: (name) ->
+    for kev, values of @cache()
+      if values.name is name
+        return values
+    return null
+        

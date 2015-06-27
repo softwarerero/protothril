@@ -1,8 +1,9 @@
 m = require 'mithril'
 Module = require '../abstract/Module'
 T9n = require '../util/T9n'
-RoleVM = require '../auth/RoleVM'
 UserVM = require '../user/UserVM'
+RoleVM = require '../auth/RoleVM'
+RightVM = require '../auth/RightVM'
 
 module.exports = class Login extends Module
 
@@ -57,30 +58,40 @@ module.exports = class Login extends Module
     else
       response = JSON.parse(xhr.response)
       window.sessionStorage.token = response.token
-#      console.log 'profile: ' + JSON.stringify response.profile
       window.sessionStorage.username = response.profile.nickname || response.profile.email
       Login.profile = response.profile
-      Login.hasRole 'sdfd'
       
       Login.msgSuccess T9n.get 'You are logged in successfully'
       Login.loggedIn true
       m.route @app.conf.defaultRoute
+
+      # preload to hava data available in view
+      RoleVM.current.all (roles) ->
+        RightVM.current.all (rights) ->
+          console.log 'hasRole: ' + Login.hasRole 'sdfd'
+          console.log 'hasRole: ' + Login.hasRole 'nix'
+          console.log 'hasRight: ' + Login.hasRight 'nix'
+          console.log 'hasRight: ' + Login.hasRight 'b444'
+
       xhr.responseText
 
       
   @hasRole: (name) ->
-    roles = RoleVM.current.cache()
-    console.log 'name: ' + JSON.stringify name
-    console.log 'roles: ' + JSON.stringify roles
-    idForName = null
-    for role in roles
-      console.log 'attributes: ' + JSON.stringify role.attributes
-      console.log 'name: ' + JSON.stringify role.attributes.name
-      console.log 'is: ' + (role.attributes.name() is name)
-      if role.attributes.name() is name
-        idForName = role.attributes.id()
-    console.log 'idForName: ' + idForName
-    if idForName
-      users = UserVM.current.cache()
-      console.log 'users: ' + JSON.stringify users
-    idForName is true
+    role = RoleVM.current.forName name
+    if role?.id 
+#      console.log 'profile: ' + JSON.stringify Login.profile
+#      roles = Login.profile.rols
+      return !!(r for r in Login.profile.rols when r is role?.id)
+    return false
+
+  @hasRight: (name) ->
+    rights = RightVM.current.forName name
+    if rights?.id
+      roles = Login.profile.rols
+      for roleId in roles
+        role = RoleVM.current.cache()[roleId]
+        for rightId in role.rights
+          if rightId is rights.id
+            return true
+    return false  
+    

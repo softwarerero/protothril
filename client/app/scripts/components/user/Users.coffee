@@ -8,7 +8,6 @@ TableHelper = require '../util/TableHelper'
 module.exports = class Users extends Module
 
   @controller: () =>
-#    VM.current.all() # preload to hava data available in view
     tableHelper: new TableHelper VM.current
 
     add: () =>
