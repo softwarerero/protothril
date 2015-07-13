@@ -9,4 +9,5 @@
 /client/.git
 /client/app/www
 /client/cordova
+/client/app/scripts/conf.coffee
 test
