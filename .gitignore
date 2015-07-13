@@ -7,3 +7,6 @@
 **/*.iml
 /client/test
 /client/.git
+/client/app/www
+/client/cordova
+test

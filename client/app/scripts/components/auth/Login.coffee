@@ -29,7 +29,7 @@ module.exports = class Login extends Module
       m('br')
       m("input", {type: 'password', onchange: m.withAttr("value", password), value: password()})
       m('br')
-      m("button", {onclick: ctrl.login}, "Login")
+      m("button", {class: 'pure-button', onclick: ctrl.login}, "Login")
     ]
     
     

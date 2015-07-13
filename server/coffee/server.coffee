@@ -3,6 +3,7 @@ http = require('http')
 http.globalAgent.maxSockets = 10
 app = express()
 cors = require('cors')
+uuid = require('node-uuid')
 app.use(cors({credentials: true}))
 bodyParser = require('body-parser')
 app.use bodyParser.json()
@@ -14,6 +15,7 @@ expressJwt = require('express-jwt')
 jwt = require('jsonwebtoken')
 # We are going to protect /api routes with JWT
 JWT_SECRET = 'SUPER SECRET STRING'
+JWT_SECRET = secretKey = uuid.v4()
 app.use '/api', expressJwt({secret: JWT_SECRET}).unless({path: ['/login']})
 app.use (err, req, res, next) ->
   if err.name is 'UnauthorizedError' 
