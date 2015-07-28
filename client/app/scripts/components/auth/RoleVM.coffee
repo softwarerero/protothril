@@ -4,7 +4,7 @@ Validation = require '../util/Validation'
 require './auth.es.coffee'
 T9n = require '../util/T9n'
 
-
+# For a shared user between multiple applications roles like 'appname.rolename' can be used.
 module.exports = class RoleVM extends ViewModel
 
   constructor: () ->
@@ -14,7 +14,6 @@ module.exports = class RoleVM extends ViewModel
     @url = 'api/role'
     @homeRoute = '/roles'
     @attributes = Object.create(null)
-    #    @filter = false
     @init()
 
   init: () ->

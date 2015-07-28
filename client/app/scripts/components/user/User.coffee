@@ -5,16 +5,33 @@ Module = require '../abstract/Module'
 VM = require './UserVM'
 RoleVM = require '../auth/RoleVM'
 T9n = require '../util/T9n'
+DatePicker = require 'sm-datepicker'
 
 module.exports = class User extends Module
 
   constructor: (@app) ->
    
-  @controller: () =>
+  @controller: () ->
 
     id = m.route.param("id") 
     VM.current.getForId id
     RoleVM.current.all()
+    datePicker = new DatePicker({time: false})
+    datePicker.masks =
+#      "default": "ddd mmm dd yyyy HH:MM:ss",
+      "default": "m/d/yy",
+      shortDate: "m/d/yy",
+      mediumDate: "mmm d, yyyy",
+      longDate: "mmmm d, yyyy",
+      fullDate: "dddd, mmmm d, yyyy",
+      shortTime: "h:MM TT",
+      mediumTime: "h:MM:ss TT",
+      longTime: "h:MM:ss TT Z",
+      isoDate: "yyyy-mm-dd",
+      isoTime: "HH:MM:ss",
+      isoDateTime: "yyyy-mm-dd'T'HH:MM:ss",
+      isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
+    datePicker: datePicker
 
     back: () -> 
       m.route VM.current.homeRoute
@@ -60,6 +77,7 @@ module.exports = class User extends Module
         INPUT {type: 'password', id: 'password', onchange: m.withAttr("value", attr['password']), value: attr['password']?() || null}
         m 'label', T9n.get 'Roles'
         m.component(Select2Helper, {data: ctrl.selectData(), values: attr.rols(), onchange: ctrl.changeRole}, {multiple: 'multiple', id: 'sel1'})
+        m('div', ctrl.datePicker.view())
         BUTTON {onclick: ctrl.save, class: 'pure-button pure-button-primary'}, T9n.get "Save"
         SPAN ' '
         BUTTON {onclick: ctrl.back, class: 'pure-button'}, T9n.get "Back"

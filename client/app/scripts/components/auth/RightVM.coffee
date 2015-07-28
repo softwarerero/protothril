@@ -14,7 +14,6 @@ module.exports = class RightVM extends ViewModel
     @url = 'api/right'
     @homeRoute = '/rights'
     @attributes = Object.create(null)
-#    @filter = false
     @init()
 
   init: () ->
