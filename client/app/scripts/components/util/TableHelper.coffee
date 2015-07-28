@@ -21,7 +21,8 @@ module.exports = class TableHelper
   filter: (e) =>
     search = document.getElementsByClassName('search')[0].value
     m.startComputation()
-    @vm.cache()?.map (o, index) ->
+    console.log "cache: " + JSON.stringify @vm.cacheValues()
+    @vm.cacheValues()?.map (o, index) ->
       found = true
       for key, value of o
         if key isnt 'id' and key isnt 'attrs' and key isnt 'filter'

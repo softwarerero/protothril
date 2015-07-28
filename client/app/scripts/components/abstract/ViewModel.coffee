@@ -92,6 +92,9 @@ module.exports = class ViewModel
   setCache: (x) ->
     window.caches[@verb] = m.prop x
 
+  # get array of object from cache
+  cacheValues: -> value for own prop, value of @cache()
+
   getAttributes: () ->
     obj = {}
     for k, v of @attributes
