@@ -47,6 +47,8 @@ app.use(express.static('./public'))
 #favorites = require("./controller/favorites")
 #app.use('/api/favoritos/', favorites.router)
 
+el = require("./model/EL")
+
 app.post '/login', (req, res) ->
   console.log 'login'
 #  if (!(req.body.username is 'john.doe' and req.body.password is 'foobar')) 
@@ -70,78 +72,82 @@ app.post '/login', (req, res) ->
     res.json { profile: profile, token: token }
 
     
-app.get '/api/user', (req, res) ->
-  el.getAll 'user', el.indexName, (error, response) ->
-#    console.log JSON.stringify response
-    res.json response
-
-app.get '/api/user/:id', (req, res) ->
-  el.getOne {typeName: 'user', q: "_id:#{req.params.id}"}, (error, response) ->
-#    res.json response?._source
-    res.json { id: response._id, obj: response?._source }
-
-app.put '/api/user', (req, res) ->
-#  console.log 'user: ' + JSON.stringify req.body
-  el.index req.body.id, 'user', el.indexName, req.body, (error, response) ->
+#app.get '/api/user', (req, res) ->
+#  el.getAll 'user', el.indexName, (error, response) ->
+##    console.log JSON.stringify response
+#    res.json response
+#
+#app.get '/api/user/:id', (req, res) ->
+#  el.getOne {typeName: 'user', q: "_id:#{req.params.id}"}, (error, response) ->
+##    res.json response?._source
+#    res.json { id: response._id, obj: response?._source }
+#
+#app.put '/api/user', (req, res) ->
+##  console.log 'user: ' + JSON.stringify req.body
+#  el.index req.body.id, 'user', el.indexName, req.body, (error, response) ->
+##    console.log "error: " + error
+##    console.log "response: " + JSON.stringify response
+##    res.json { _id: response._id }
+#    res.json { id: response._id, obj: req.body }
+#
+#
+#app.delete '/api/user', (req, res) ->
+#  console.log 'delete: ' + JSON.stringify req.body
+#  el.delete {type: 'user', index : el.indexName, id: req.body.id}, (error, response) ->
 #    console.log "error: " + error
 #    console.log "response: " + JSON.stringify response
 #    res.json { _id: response._id }
-    res.json { id: response._id, obj: req.body }
-
-
-app.delete '/api/user', (req, res) ->
-  console.log 'delete: ' + JSON.stringify req.body
-  el.delete {type: 'user', index : el.indexName, id: req.body.id}, (error, response) ->
-    console.log "error: " + error
-    console.log "response: " + JSON.stringify response
-    res.json { _id: response._id }
-
-
-app.get '/api/right', (req, res) ->
-  el.getAll 'right', el.indexName, (error, response) ->
-    res.json response
-
-app.get '/api/right/:id', (req, res) ->
-  el.getOne {typeName: 'right', q: "_id:#{req.params.id}"}, (error, response) ->
-#    res.json response?._source
-    res.json { id: response._id, obj: response?._source }
-
-app.put '/api/right', (req, res) ->
-  el.index req.body.id, 'right', el.indexName, req.body, (error, response) ->
-    console.log "req.body: " + JSON.stringify req.body
-    console.log "response: " + JSON.stringify response
-#    res.json { _id: response._id }
-#    obj = req.body
-#    obj._id = response._id
-    res.json { id: response._id, obj: req.body }
-
-app.delete '/api/right', (req, res) ->
-  console.log 'right.delete: ' + JSON.stringify req.body
-  el.delete {type: 'right', index : el.indexName, id: req.body.id}, (error, response) ->
-    res.json { _id: response._id }
-
-
-app.get '/api/role', (req, res) ->
-  el.getAll 'role', el.indexName, (error, response) ->
-    res.json response
-
-app.get '/api/role/:id', (req, res) ->
-  console.log "id: " + req.params.id
-  el.getOne {typeName: 'role', q: "_id:#{req.params.id}"}, (error, response) ->
-#    console.log "error: " + JSON.stringify error
+#
+#
+#app.get '/api/right', (req, res) ->
+#  el.getAll 'right', el.indexName, (error, response) ->
+#    res.json response
+#
+#app.get '/api/right/:id', (req, res) ->
+#  el.getOne {typeName: 'right', q: "_id:#{req.params.id}"}, (error, response) ->
+##    res.json response?._source
+#    res.json { id: response._id, obj: response?._source }
+#
+#app.put '/api/right', (req, res) ->
+#  el.index req.body.id, 'right', el.indexName, req.body, (error, response) ->
+#    console.log "req.body: " + JSON.stringify req.body
 #    console.log "response: " + JSON.stringify response
-#    res.json response?._source
-    res.json { id: response._id, obj: response?._source }
-
-app.put '/api/role', (req, res) ->
-  el.index req.body.id, 'role', el.indexName, req.body, (error, response) ->
+##    res.json { _id: response._id }
+##    obj = req.body
+##    obj._id = response._id
+#    res.json { id: response._id, obj: req.body }
+#
+#app.delete '/api/right', (req, res) ->
+#  console.log 'right.delete: ' + JSON.stringify req.body
+#  el.delete {type: 'right', index : el.indexName, id: req.body.id}, (error, response) ->
 #    res.json { _id: response._id }
-    res.json { id: response._id, obj: req.body }
+#
 
-app.delete '/api/role', (req, res) ->
-  el.delete {type: 'role', index : el.indexName, id: req.body.id}, (error, response) ->
-    res.json { _id: response._id }
-    
+#app.get '/api/role', (req, res) ->
+#  el.getAll 'role', el.indexName, (error, response) ->
+#    res.json response
+#
+#app.get '/api/role/:id', (req, res) ->
+#  console.log "id: " + req.params.id
+#  el.getOne {typeName: 'role', q: "_id:#{req.params.id}"}, (error, response) ->
+##    console.log "error: " + JSON.stringify error
+##    console.log "response: " + JSON.stringify response
+##    res.json response?._source
+#    res.json { id: response._id, obj: response?._source }
+#
+#app.put '/api/role', (req, res) ->
+#  el.index req.body.id, 'role', el.indexName, req.body, (error, response) ->
+##    res.json { _id: response._id }
+#    res.json { id: response._id, obj: req.body }
+#
+#app.delete '/api/role', (req, res) ->
+#  el.delete {type: 'role', index : el.indexName, id: req.body.id}, (error, response) ->
+#    res.json { _id: response._id }
+
+crudFactory = require("./crudFactory")
+crudFactory.makeCrud app, 'user'
+crudFactory.makeCrud app, 'right'
+crudFactory.makeCrud app, 'role'
 
 server = http.createServer(app)
 reload(server, app, 1000)
@@ -149,15 +155,14 @@ reload(server, app, 1000)
 server.listen 3017, () ->
   console.log('Listening on port %d', server.address().port)
 
-el = require("./model/EL")
 
 
-Array.prototype.remove = (args...) ->
-  output = []
-  for arg in args
-    index = @indexOf arg
-    output.push @splice(index, 1) if index isnt -1
-  output = output[0] if args.length is 1
-  output
+#Array.prototype.remove = (args...) ->
+#  output = []
+#  for arg in args
+#    index = @indexOf arg
+#    output.push @splice(index, 1) if index isnt -1
+#  output = output[0] if args.length is 1
+#  output
 
             
