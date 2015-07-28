@@ -24,6 +24,8 @@ Protothril is the idea of a blueprint for web applications. It should include th
   * date
   * number
   * currency
+  * captcha
+  * file/image upload
 * User Management
 * Authentification
 * Role bases authorization
