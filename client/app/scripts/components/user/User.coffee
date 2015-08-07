@@ -3,7 +3,7 @@ Select2Helper = require '../util/Select2Helper'
 Module = require '../abstract/Module'
 VM = require './UserVM'
 RoleVM = require '../auth/RoleVM'
-T9n = require '../../../../../shared/util/T9n'
+T9n = require 'T9n'
 DatePicker = require 'sm-datepicker'
 
 module.exports = class User extends Module

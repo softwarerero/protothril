@@ -1,4 +1,4 @@
-T9n = require '../../../../../shared/util/T9n'
+T9n = require 'T9n'
 
 es =
 

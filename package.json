@@ -8,7 +8,9 @@
     ]
   },
   "browser": {
-    "jquery": "./client/app/bower_components/jquery/dist/jquery.js"
+    "jquery": "./client/app/bower_components/jquery/dist/jquery.js",
+    "T9n": "./client/util/T9n.coffee",
+    "Validation": "./client/util/Validation.coffee"
   },
   "browserify-shim": {
     "jquery": "$",
@@ -17,6 +19,8 @@
         "./client/app/bower_components/jquery/dist/jquery.js:$"
       ]
     }
+    "T9n": { "exports": "T9n" },
+    "Validation": { "exports": "Validation" }
   },
   "dependencies": {
     "cookie-getter": "0.0.2",

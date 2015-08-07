@@ -1,5 +1,5 @@
 m = require 'mithril'
-T9n = require '../../../../shared/util/T9n'
+T9n = require 'T9n'
 Login = require './auth/Login'
 
 module.exports = class Menu

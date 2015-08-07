@@ -15,7 +15,8 @@ right = require './components/auth/Right'
 roles = require './components/auth/Roles'
 role = require './components/auth/Role'
 register = require './components/auth/Register'
-T9n = require '../../../shared/util/T9n'
+#T9n = require '../../../shared/util/T9n'
+T9n = require 'T9n'
 
 m.module(document.getElementById("message"), {controller: message.controller, view: message.view})
 m.module(document.getElementById("menu"), {controller: menu.controller, view: menu.view})

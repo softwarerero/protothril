@@ -2,7 +2,7 @@ m = require 'mithril'
 Module = require '../abstract/Module'
 VM = require './RoleVM'
 RightVM = require './RightVM'
-T9n = require '../../../../../shared/util/T9n'
+T9n = require 'T9n'
 Select2Helper = require '../util/Select2Helper'
 
 module.exports = class Role extends Module

@@ -1,8 +1,8 @@
 m = require 'mithril'
 ViewModel = require '../abstract/ViewModel'
-Validation = require '../../../../../shared/util/Validation'
+Validation = require 'Validation'
 require './auth.es.coffee'
-T9n = require '../../../../../shared/util/T9n'
+T9n = require 'T9n'
 
 
 module.exports = class RightVM extends ViewModel
