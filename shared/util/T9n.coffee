@@ -49,4 +49,4 @@ module.exports = class T9n
     !!(@maps[@language]?[label] || @maps[@defaultLanguage]?[label])
 
 @t9n = (x, includePrefix, params) -> T9n.get(x)
-
+@T9n = T9n

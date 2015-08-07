@@ -1,5 +1,3 @@
-T9n = require 'T9n'
-
 es =
 
   User: 'Usuario'

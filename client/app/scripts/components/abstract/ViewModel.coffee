@@ -1,6 +1,4 @@
 m = require 'mithril'
-#T9n = require '../util/T9n'
-T9n = require 'T9n'
 
 module.exports = class ViewModel
 
@@ -53,7 +51,7 @@ module.exports = class ViewModel
 #      console.log 'save.xhr: ' + JSON.stringify xhr
       @cache()[xhr.id] = xhr.obj
 #      console.log 'save.@cache(): ' + JSON.stringify @cache()
-      @msgSuccess T9n.get 'crud.saved', {modelName: @modelName}
+      @msgSuccess @T9n.get 'crud.saved', {modelName: @modelName}
     false
  
     
@@ -63,7 +61,7 @@ module.exports = class ViewModel
     @loadingRequest(request).then (xhr, xhrOptions) =>
       console.log 'del.id: ' + xhr.id
       delete @cache()[xhr.id]
-      @msgSuccess T9n.get 'crud.deleted', {modelName: @modelName}
+      @msgSuccess @T9n.get 'crud.deleted', {modelName: @modelName}
     false    
     
   
@@ -77,7 +75,7 @@ module.exports = class ViewModel
       request = {method: "GET", url: ViewModel.conf.url + "#{@url}/#{id}", config: @xhrConfig}
       @loadingRequest(request).then (xhr, xhrOptions) =>
         if not xhr
-          @msgError T9n.get 'no data'
+          @msgError @T9n.get 'no data'
           @goHome()
         else
           @cloneAttributes @vm.current, xhr.obj
@@ -118,7 +116,7 @@ module.exports = class ViewModel
 #    console.log 'xhr.status: ' + xhr.status
     if xhr.status is 401  
       response = JSON.parse xhr.response
-      ViewModel.app.message.error T9n.get response.error  
+      ViewModel.app.message.error @T9n.get response.error  
       loading.style.display = "none"
       m.route '/login'
       xhr

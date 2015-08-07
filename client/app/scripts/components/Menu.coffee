@@ -1,5 +1,4 @@
 m = require 'mithril'
-T9n = require 'T9n'
 Login = require './auth/Login'
 
 module.exports = class Menu
@@ -13,17 +12,17 @@ module.exports = class Menu
 #      m('p', Login.username()) 
       m 'ul', {class: 'pure-menu-list'}, [ 
         m 'li', {class: 'pure-menu-item pure-menu-has-children pure-menu-allow-hover'}, [
-          m 'a', {class: 'pure-menu-link', href: '#'}, T9n.get 'Admin'
+          m 'a', {class: 'pure-menu-link', href: '#'}, @T9n.get 'Admin'
           m 'ul', {class: 'pure-menu-children'}, [
-            mlink '/users', T9n.get 'Users'
-            mlink '/roles', T9n.get 'Roles' 
-            mlink '/rights', T9n.get 'Rights'
+            mlink '/users', @T9n.get 'Users'
+            mlink '/roles', @T9n.get 'Roles' 
+            mlink '/rights', @T9n.get 'Rights'
           ]
         ]
         if Login.loggedIn()
-          mlink '/logout', (T9n.get 'Logout') + ' (' + Login.username() + ')'
+          mlink '/logout', (@T9n.get 'Logout') + ' (' + Login.username() + ')'
         else
-          mlink '/login', T9n.get 'Login'
+          mlink '/login', @T9n.get 'Login'
       ]
  
 

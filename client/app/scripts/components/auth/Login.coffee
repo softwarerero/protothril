@@ -1,6 +1,5 @@
 m = require 'mithril'
 Module = require '../abstract/Module'
-T9n = require 'T9n'
 UserVM = require '../user/UserVM'
 RoleVM = require '../auth/RoleVM'
 RightVM = require '../auth/RightVM'
@@ -27,18 +26,18 @@ module.exports = class Login extends Module
 
   @view: (ctrl) ->
     [ 
-      m('h2', T9n.get 'Login')
+      m('h2', @T9n.get 'Login')
       FORM {class: 'pure-form pure-form-stacked'}, [
-        LABEL {}, T9n.get 'email'
+        LABEL {}, @T9n.get 'email'
         m("input", {onchange: m.withAttr("value", Login.email), value: Login.email()})
-        LABEL {}, T9n.get 'password'
+        LABEL {}, @T9n.get 'password'
         m("input", {type: 'password', onchange: m.withAttr("value", Login.password), value: Login.password()})
-        m("button", {class: 'pure-button', onclick: ctrl.login}, T9n.get 'Login')
+        m("button", {class: 'pure-button', onclick: ctrl.login}, @T9n.get 'Login')
       ]
       if window.App.conf.register
         [
           m('br')
-          m 'a[href="/register"]', {config: m.route, class: 'pure-menu-link2'}, T9n.get 'offerRegistration'
+          m 'a[href="/register"]', {config: m.route, class: 'pure-menu-link2'}, @T9n.get 'offerRegistration'
         ]
     ]
     
@@ -59,7 +58,7 @@ module.exports = class Login extends Module
       Login.profile = null
     if xhr.status is 400
       response = JSON.parse xhr.response
-      Login.msgError T9n.get response.error
+      Login.msgError @T9n.get response.error
     else if xhr.status > 200
       delete window.sessionStorage.token
       delete window.sessionStorage.username
@@ -73,7 +72,7 @@ module.exports = class Login extends Module
       window.sessionStorage.username = response.profile.nickname || response.profile.email
       Login.profile = response.profile
       
-      Login.msgSuccess T9n.get 'You are logged in successfully'
+      Login.msgSuccess @T9n.get 'You are logged in successfully'
       Login.loggedIn true
       m.route @app.conf.defaultRoute
 

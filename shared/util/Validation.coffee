@@ -42,4 +42,6 @@ module.exports = class Validation
     
   isValid: -> !@msgs.length
   isInvalid: -> !!@msgs.length
-#  firstMsg: -> @msgs[0] # T9n.get @msgs[0].msg, {fieldName: @msgs[0].name} 
+#  firstMsg: -> @msgs[0] # T9n.get @msgs[0].msg, {fieldName: @msgs[0].name}
+
+@Validation = Validation

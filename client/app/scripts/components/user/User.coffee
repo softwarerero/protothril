@@ -3,7 +3,6 @@ Select2Helper = require '../util/Select2Helper'
 Module = require '../abstract/Module'
 VM = require './UserVM'
 RoleVM = require '../auth/RoleVM'
-T9n = require 'T9n'
 DatePicker = require 'sm-datepicker'
 
 module.exports = class User extends Module
@@ -43,7 +42,7 @@ module.exports = class User extends Module
         firstMsg = validation.msgs[0]
         field = document.getElementById firstMsg.name
         field.className = 'error'
-        Module.msgError T9n.get firstMsg.error, firstMsg.params
+        Module.msgError @T9n.get firstMsg.error, firstMsg.params
       else
         VM.current.save()
         m.route VM.current.homeRoute
@@ -64,22 +63,22 @@ module.exports = class User extends Module
 #    console.log 'allrols: ' + JSON.stringify RoleVM.current.cache()
 #    console.log 'rols: ' + JSON.stringify attr.rols
     [
-      H4(T9n.get 'User')
+      H4(@T9n.get 'User')
       FORM {class: 'pure-form pure-form-stacked'}, [
         @makeInput attr, 'nickname'
         @makeInput attr, 'email'
         @makeInput attr, 'firstname' 
         @makeInput attr, 'lastname'
-        m 'label', T9n.get 'Roles'
+        m 'label', @T9n.get 'Roles'
         m.component(Select2Helper, {data: ctrl.selectData(), values: attr.rols(), onchange: ctrl.changeRole}, {multiple: 'multiple', id: 'sel1'})
-        LABEL {}, T9n.get 'birthday'
+        LABEL {}, @T9n.get 'birthday'
         INPUT {type: 'date', id: 'birthday', onchange: m.withAttr("value", attr['birthday']), value: attr['birthday']?() || null}, pickadate(this)
-        LABEL {}, T9n.get 'password'
+        LABEL {}, @T9n.get 'password'
         INPUT {type: 'password', id: 'password', onchange: m.withAttr("value", attr['password']), value: attr['password']?() || null}
 #        m('div', ctrl.datePicker.view())
-        BUTTON {onclick: ctrl.save, class: 'pure-button pure-button-primary'}, T9n.get "Save"
+        BUTTON {onclick: ctrl.save, class: 'pure-button pure-button-primary'}, @T9n.get "Save"
         SPAN ' '
-        BUTTON {onclick: ctrl.back, class: 'pure-button'}, T9n.get "Back"
+        BUTTON {onclick: ctrl.back, class: 'pure-button'}, @T9n.get "Back"
       ]
     ]
   

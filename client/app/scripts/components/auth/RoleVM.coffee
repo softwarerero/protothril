@@ -1,8 +1,6 @@
 m = require 'mithril'
 ViewModel = require '../abstract/ViewModel'
-Validation = require 'Validation'
 require './auth.es.coffee'
-T9n = require 'T9n'
 
 # For a shared user between multiple applications roles like 'appname.rolename' can be used.
 module.exports = class RoleVM extends ViewModel
@@ -26,8 +24,8 @@ module.exports = class RoleVM extends ViewModel
   createObj: -> new RoleVM
 
   @validate: (obj) ->
-    validation = new Validation()
-    validation.test 'name', Validation.notNull obj.name(), {fieldName: T9n.get('name')}
+    validation = new @Validation()
+    validation.test 'name', @Validation.notNull obj.name(), {fieldName: @T9n.get('name')}
     validation
 
   forName: (name) ->
