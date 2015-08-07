@@ -26,15 +26,9 @@ module.exports = class RoleVM extends ViewModel
   createObj: -> new RoleVM
 
   @validate: (obj) ->
-    msgs = []
-    test = (field, val) ->
-      if val
-        obj =
-          name: field
-          msg: val
-        msgs.push obj
-    test 'name', Validation.notNull obj.name(), {fieldName: T9n.get('name')}
-    msgs
+    validation = new Validation()
+    validation.test 'name', Validation.notNull obj.name(), {fieldName: T9n.get('name')}
+    validation
 
   forName: (name) ->
 #    console.log 'cache: ' + JSON.stringify @cache()

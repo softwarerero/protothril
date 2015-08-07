@@ -46,6 +46,7 @@ module.exports = class ViewModel
            
 
   save: () ->
+    console.log 'save'
     request = {method: "PUT", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: @getAttributes()}
     @loadingRequest(request).then (xhr, xhrOptions) =>
 #      console.log 'save.xhr: ' + JSON.stringify xhr
@@ -78,7 +79,7 @@ module.exports = class ViewModel
           @goHome()
         else
           @cloneAttributes @vm.current, xhr.obj
-          @vm.current.id = xhr.id
+          @vm.current.attributes.id xhr.id
           objs[xhr.id] = xhr.obj 
   
           

@@ -19,9 +19,11 @@ rsync -chavP  107.170.166.67:~/clasiserv/front/test.log .
 * https://github.com/adunkman/connect-assets
 * https://www.npmjs.org/package/sha1
 * https://www.npmjs.com/package/cors
+* http://www.nodemailer.com/
 
 
 #### Elasticsearch
+https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference.html
 http://localhost:9200/_plugin/marvel/kibana/index.html#/dashboard/file/marvel.overview.json
 http://localhost:9200//_cluster/health
 http://localhost:9301/clasiserv/settings/_search?q=_id:lastReadPage

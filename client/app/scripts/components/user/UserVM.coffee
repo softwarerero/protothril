@@ -33,17 +33,14 @@ module.exports = class UserVM extends ViewModel
   createObj: -> new UserVM
    
   @validate: (obj) ->
-    msgs = []
-    test = (field, val) -> 
-      if val
-        obj = 
-          name: field
-          msg: val
-        msgs.push obj
-    test 'email', Validation.email obj.email(), {fieldName: T9n.get('email')}
-    test 'nickname', Validation.notNull obj.nickname(), {fieldName: T9n.get('nickname')}
-    test 'nickname', Validation.minLength obj.nickname(), {fieldName: T9n.get('nickname'), length: 3}
-    msgs
+    validation = new Validation()
+    validation.test 'email', Validation.notNull obj.email(), {fieldName: T9n.get('email')}
+    validation.test 'email', Validation.email obj.email(), {fieldName: T9n.get('email')}
+#    validation.test 'nickname', Validation.notNull obj.nickname(), {fieldName: T9n.get('nickname')}
+#    validation.test 'nickname', Validation.minLength obj.nickname(), {fieldName: T9n.get('nickname'), length: 3}
+    validation.test 'password', Validation.notNull obj.password(), {fieldName: T9n.get('password')}
+    validation.test 'password', Validation.minLength obj.password(), {fieldName: T9n.get('password'), length: 5}
+    validation
     
   filters:
     field: 'email'

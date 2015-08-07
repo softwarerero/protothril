@@ -35,9 +35,11 @@ exports.count = (q='', callback=null, type=exports.typeName, index=exports.index
     if callback
       callback {error: 'no index'}
 
-exports.index = (id, typeName=exports.typeName, indexName=exports.indexName, json, callback) ->
-#  console.log "type " + type + ": " + JSON.stringify(json)
-  client.index {index: indexName, type: typeName, id: id, body: json, refresh: true}, (error, response, status) ->
+#exports.index = (id, typeName=exports.typeName, indexName=exports.indexName, json, callback) ->
+exports.index = (params={}, callback) ->  
+  params.index = params.index || exports.indexName
+  console.log "index.params: " + JSON.stringify(params)
+  client.index params, (error, response, status) ->
     if error
       console.log "error: " + error
       console.log "status: " + status
@@ -59,18 +61,47 @@ exports.getAll = (typeName=exports.typeName, indexName=exports.indexName, callba
 exports.getOne = (params={}, callback) ->
   params.size = params.size || 1
   params.index = params.index || exports.indexName
-  console.log "params: " + JSON.stringify params
+  console.log "getOne.params: " + JSON.stringify params
 #  client.search {size: 1, index: index, type: type, q: q}, (error, response, status) ->
   client.search params, (error, response, status) ->
     if error
       console.log "error: " + error
       console.log "status: " + status
     if response
-#      console.log "response: " + JSON.stringify response
+      console.log "response: " + JSON.stringify response
       response = response.hits.hits[0]
     if callback
       callback(error, response)
 
+#exports.createMapping = ->
+#  client.indices.getMapping {},  (error, response) ->
+#    console.log "error: " + error
+#    console.log "response: " + JSON.stringify response
+#  client.indices.delete {index: exports.indexName}, (error, response) ->
+#    console.log "error: " + error
+#    console.log "response: " + JSON.stringify response
+#  client.indices.create {index: exports.indexName}, (error, response) ->
+#    console.log "error: " + error
+#    console.log "response: " + JSON.stringify response
+#    params =
+#      index: exports.indexName
+#      type: 'user'
+#      ignoreConflicts: true
+#      body:
+#        user:
+#          properties:
+#            email: {"type" : "string", "index" : "not_analyzed"}
+#    client.indices.putMapping params, (error, response) ->
+#      console.log "error: " + error
+#      console.log "response: " + JSON.stringify response
+      
+#exports.searchExists = (params={}, callback) ->
+#  params.index = params.index || exports.indexName
+#  console.log "params: " + JSON.stringify params
+#  client.searchExists params, (error, exists) ->
+#    callback(error, exists)
+    
+    
 #DEF_PAGE_SIZE = 20
 #exports.get = (params={}, callback, type, index) ->
 #  params.size = params.size || DEF_PAGE_SIZE

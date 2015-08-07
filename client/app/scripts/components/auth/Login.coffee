@@ -9,46 +9,57 @@ module.exports = class Login extends Module
 
   @loggedIn: -> !!window.sessionStorage.token
   @username: -> window.sessionStorage.username
-  email = m.prop('2121@1.cc')
-  password = m.prop('123')
+  @email = m.prop('test@sun.com.py')
+  @password = m.prop('test123')
   @profile = null
 
-  constructor: (@app) ->
-    super(@app) 
+#  constructor: (@app) ->
+#    super(@app) 
     
-  controller: () =>
-    login: () =>
-      data = {email: email(), password: password()}
+  @controller: () ->
+    login: () ->
+      data = {email: Login.email(), password: Login.password()}
       url = Login.conf.url + 'login'
-      request = {method: "POST", background: false, url: url, data: data, extract: @extract}
-      m.request(request).then(log) #.then(authorized)
+      console.log 'url: ' + url
+      request = {method: "POST", background: false, url: url, data: data, extract: Login.extract}
+      m.request(request).then(@log) #.then(authorized)
+      false
 
-  view: (ctrl) ->
+  @view: (ctrl) ->
     [ 
-      m("input", {onchange: m.withAttr("value", email), value: email()})
-      m('br')
-      m("input", {type: 'password', onchange: m.withAttr("value", password), value: password()})
-      m('br')
-      m("button", {class: 'pure-button', onclick: ctrl.login}, "Login")
+      m('h2', T9n.get 'Login')
+      FORM {class: 'pure-form pure-form-stacked'}, [
+        LABEL {}, T9n.get 'email'
+        m("input", {onchange: m.withAttr("value", Login.email), value: Login.email()})
+        LABEL {}, T9n.get 'password'
+        m("input", {type: 'password', onchange: m.withAttr("value", Login.password), value: Login.password()})
+        m("button", {class: 'pure-button', onclick: ctrl.login}, T9n.get 'Login')
+      ]
+      if window.App.conf.register
+        [
+          m('br')
+          m 'a[href="/register"]', {config: m.route, class: 'pure-menu-link2'}, T9n.get 'offerRegistration'
+        ]
     ]
     
     
-  log = (xhr, err) ->
-#    console.log 'log xhr: ' + JSON.stringify xhr 
-#    console.log('log err: ' + err)  
+  @log = (xhr, err) ->
     xhr
 
       
-  extract: (xhr, xhrOptions) =>
-#    console.log 'xhr: ' + JSON.stringify xhr
-#    console.log 'xhrOptions: ' + JSON.stringify xhrOptions
-
+  @extract: (xhr, xhrOptions) =>
+    console.log 'xhr.status: ' + JSON.stringify xhr.status
+    console.log 'xhr.response: ' + JSON.stringify xhr.response
+    console.log 'xhrOptions: ' + JSON.stringify xhrOptions
     if xhr.status is 401
       delete window.sessionStorage.token
       delete window.sessionStorage.username
       Login.msgError xhr.responseText
       Login.loggedIn false
       Login.profile = null
+    if xhr.status is 400
+      response = JSON.parse xhr.response
+      Login.msgError T9n.get response.error
     else if xhr.status > 200
       delete window.sessionStorage.token
       delete window.sessionStorage.username
@@ -56,7 +67,8 @@ module.exports = class Login extends Module
       Login.loggedIn false
       Login.profile = null
     else
-      response = JSON.parse(xhr.response)
+      response = JSON.parse xhr.response
+      console.log 'response: ' + JSON.stringify response
       window.sessionStorage.token = response.token
       window.sessionStorage.username = response.profile.nickname || response.profile.email
       Login.profile = response.profile
@@ -73,7 +85,7 @@ module.exports = class Login extends Module
           console.log 'hasRight: ' + Login.hasRight 'nix'
           console.log 'hasRight: ' + Login.hasRight 'b444'
 
-      xhr.responseText
+    xhr.responseText
 
       
   @hasRole: (name) ->

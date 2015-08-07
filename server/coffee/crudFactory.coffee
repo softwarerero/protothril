@@ -13,7 +13,12 @@ exports.makeCrud = (app, verb, home='/api/') ->
   
   app.put "/api/#{verb}", (req, res) ->
   #  console.log 'user: ' + JSON.stringify req.body
-    el.index req.body.id, verb, el.indexName, req.body, (error, response) ->
+    params =
+      type: verb
+      id: req.body.id
+      body: req.body
+
+    el.index params, (error, response) ->
   #    console.log "error: " + error
   #    console.log "response: " + JSON.stringify response
   #    res.json { _id: response._id }

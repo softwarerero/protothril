@@ -18,14 +18,12 @@ module.exports = class Right extends Module
 
     save: () ->
       attr = VM.current.attributes
-#      console.log 'attr: ' + JSON.stringify attr   
-      msgs = VM.validate attr
-#      console.log 'msgs: ' + msgs 
-      for m in msgs
-        field = document.getElementById m.name
+      validation = VM.validate attr
+      if validation.isInvalid()
+        firstMsg = validation.msgs[0]
+        field = document.getElementById firstMsg.name
         field.className = 'error'
-      if msgs.length
-        Module.msgError msgs[0].msg
+        Module.msgError T9n.get firstMsg.error, firstMsg.params
       else
         VM.current.save()
         m.route VM.current.homeRoute
