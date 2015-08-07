@@ -1,5 +1,4 @@
-es =
-
+T9n.map "es", 
   User: 'Usuario'
   Users: 'Usuarios'
   Login: 'Entrar'
@@ -11,4 +10,3 @@ es =
   password: 'Contraseña'
   
 
-T9n.map "es", es

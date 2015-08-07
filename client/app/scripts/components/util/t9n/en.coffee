@@ -1,5 +1,4 @@
-#Language: English
-module.exports = en =
+T9n.map "en",
 
   t9nLanguage: 'English'
   Todo: 'TodoTest'

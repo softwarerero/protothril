@@ -1,5 +1,4 @@
-#Language: Spanish
-module.exports = es =
+T9n.map "es",
 
   t9nLanguage: 'Spanish'
 

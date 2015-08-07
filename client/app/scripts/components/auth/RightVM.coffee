@@ -24,7 +24,7 @@ module.exports = class RightVM extends ViewModel
 
   @validate: (obj) ->
     validation = new @Validation()
-    validation.test 'name', @Validation.notNull obj.name(), {fieldName: @T9n.get('name')}
+    validation.test 'name', @Validation.notNull obj.name(), {fieldName: T9n.get('name')}
     validation
 
   forName: (name) ->

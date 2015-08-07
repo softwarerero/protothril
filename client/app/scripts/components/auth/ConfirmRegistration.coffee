@@ -18,13 +18,13 @@ module.exports = class ConfirmRegistration extends Module
   @view: (ctrl) ->
     [
       m 'h2', 'hi'
-#      m('h2', @T9n.get 'ConfirmRegistration')
+#      m('h2', T9n.get 'ConfirmRegistration')
 #      FORM {class: 'pure-form pure-form-stacked'}, [
-#        LABEL {}, @T9n.get 'email'
+#        LABEL {}, T9n.get 'email'
 #        m("input", {onchange: m.withAttr("value", Register.email), value: Register.email()})
-#        LABEL {}, @T9n.get 'password'
+#        LABEL {}, T9n.get 'password'
 #        m("input", {type: 'password', onchange: m.withAttr("value", Register.password), value: Register.password()})
-#        m("button", {class: 'pure-button', onclick: ctrl.register}, @T9n.get 'Register')
+#        m("button", {class: 'pure-button', onclick: ctrl.register}, T9n.get 'Register')
 #      ]
     ]
 
@@ -34,11 +34,11 @@ module.exports = class ConfirmRegistration extends Module
     if xhr.status > 200
 #      console.log 'Problem: ' + xhr.status
       console.log 'Problem: ' + xhr.status + ' (' + response.error + ')'
-      Module.msgError @T9n.get response.error, response.params
+      Module.msgError T9n.get response.error, response.params
     else
 #      console.log 'Good: ' + xhr.status
-#      Register.msgSuccess @T9n.get 'You are logged in successfully'
-      Module.msgError @T9n.get response.msg
+#      Register.msgSuccess T9n.get 'You are logged in successfully'
+      Module.msgError T9n.get response.msg
       m.route '/login'
     xhr.responseText
 

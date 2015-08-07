@@ -20,7 +20,7 @@ module.exports = class Module
 #      console.log 'field: ' + field
 #      val = attr[field]?()
 #      console.log 'val: ' + val
-      LABEL {for: field}, @T9n.get field
+      LABEL {for: field}, T9n.get field
 #      val = if attr[field] then attr[field] else ''
       INPUT {id: field, onchange: m.withAttr("value", attr[field]), value: attr[field]?()}
 #      INPUT {id: field, onchange: m.withAttr("value", @setAttribute[field]), value: attr[field]?()}

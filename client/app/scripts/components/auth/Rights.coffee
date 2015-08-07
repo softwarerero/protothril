@@ -22,7 +22,7 @@ module.exports = class Rights extends Module
 
   @view: (ctrl) ->
     [
-      H4(@T9n.get 'Rights')
+      H4(T9n.get 'Rights')
       DIV {id: 'rights'}, [
         FORM {class: 'pure-form'}, [
           INPUT {class: 'search', placeholder: 'Search', oninput: ctrl.tableHelper.filter}
@@ -31,7 +31,7 @@ module.exports = class Rights extends Module
           THEAD [
             TR [
               TH( I {class: 'fa fa-plus action th-action', onclick: m.withAttr('dataid', ctrl.add)} )
-              TH( {'data-sort-by': 'name', onclick: ctrl.tableHelper.sorts}, @T9n.get 'name'),
+              TH( {'data-sort-by': 'name', onclick: ctrl.tableHelper.sorts}, T9n.get 'name'),
             ]
           ]
           TBODY {class: 'list'}, [

@@ -1,4 +1,4 @@
-es =
+T9n.map "es",
 
   Admin: 'Administración'
   Right: 'Derecho'
@@ -21,4 +21,3 @@ es =
     notconfirmed: 'El email no esta confirmado todavía'
     complete: 'Tu usuario está activado'
 
-T9n.map "es", es

@@ -1,4 +1,5 @@
 m = require 'mithril'
+require '../../../shared/util/T9n'
 
 # Main namespace
 window.App = app = {} 
@@ -36,14 +37,16 @@ m.route document.getElementById("my-content"), "/users",
   "/confirmRegistration/:email/:token": confirmRegistration
 
 
-if not @T9n.isDefined '@T9nName'
-  @T9n.map "en", require './components/util/T9n/en'
-  @T9n.map "es", require './components/util/T9n/es'
-  #  @T9n.map "en", require '../auth/auth.en'
-  @T9n.map "es", require './components/auth/auth.es'
-  #  @T9n.map "en", require '../user/user.en'
-  @T9n.map "es", require './components/user/user.es'
-  @T9n.setLanguage 'es'
+#console.log '1: ' + JSON.stringify require './components/util/T9n/en'
+if not T9n.isDefined 't9nLanguage'
+  console.log '2'
+  require './components/util/T9n/en'
+  require './components/util/T9n/es'
+  #  T9n.map "en", require '../auth/auth.en'
+  require './components/auth/auth.es'
+  #  T9n.map "en", require '../user/user.en'
+  require './components/user/user.es'
+  T9n.setLanguage 'es'
 
 
 
