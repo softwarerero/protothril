@@ -29,4 +29,4 @@ exports.makeCrud = (app, verb, home='/api/') ->
     el.delete {type: verb, index : el.indexName, id: req.body.id}, (error, response) ->
       console.log "error: " + error
       console.log "response: " + JSON.stringify response
-      res.json { _id: response._id }  
+      res.json { id: response._id }  

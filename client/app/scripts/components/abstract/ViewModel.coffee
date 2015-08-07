@@ -60,6 +60,7 @@ module.exports = class ViewModel
     data = {id: id}
     request = {method: "DELETE", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: data}
     @loadingRequest(request).then (xhr, xhrOptions) =>
+      console.log 'del.id: ' + xhr.id
       delete @cache()[xhr.id]
       @msgSuccess T9n.get 'crud.deleted', {modelName: @modelName}
     false    
