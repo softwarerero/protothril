@@ -1,4 +1,4 @@
-T9n = require '../../../client/app/scripts/components/util/T9n'
+T9n = require '../../../shared/util/T9n'
 
 if not T9n.isDefined 'appName'
   T9n.map "es", require './es'

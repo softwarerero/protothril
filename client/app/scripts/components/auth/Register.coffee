@@ -1,6 +1,6 @@
 m = require 'mithril'
 Module = require '../abstract/Module'
-T9n = require '../util/T9n'
+T9n = require '../../../../../shared/util/T9n'
 
 module.exports = class Register extends Module
 

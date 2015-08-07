@@ -1,7 +1,7 @@
 m = require 'mithril'
 ViewModel = require '../abstract/ViewModel'
-Validation = require '../util/Validation'
-T9n = require '../util/T9n'
+Validation = require '../../../../../shared/util/Validation'
+T9n = require '../../../../../shared/util/T9n'
 
 
 module.exports = class UserVM extends ViewModel

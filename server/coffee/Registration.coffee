@@ -1,6 +1,7 @@
 conf = require './conf'
-Validation = require '../../client/app/scripts/components/util/Validation'
+Validation = require '../../shared/util/Validation'
 t9n = require('./t9n/t9nServer')
+
 uuid = require('node-uuid')
 el = require("./model/EL")
 

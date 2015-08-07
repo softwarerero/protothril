@@ -1,5 +1,6 @@
 T9n = require './T9n'
 
+
 module.exports = class Validation
 
   @notNull: (x, params) -> if !!x then null else @t9n 'validation.notNull', params

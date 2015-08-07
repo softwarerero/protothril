@@ -1,7 +1,7 @@
 m = require 'mithril'
 Module = require '../abstract/Module'
 VM = require './RoleVM'
-T9n = require '../util/T9n'
+T9n = require '../../../../../shared/util/T9n'
 TableHelper = require '../util/TableHelper'
 
 module.exports = class Roles extends Module

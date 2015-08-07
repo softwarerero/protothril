@@ -1,6 +1,6 @@
 m = require 'mithril'
 Module = require '../abstract/Module'
-T9n = require '../util/T9n'
+T9n = require '../../../../../shared/util/T9n'
 UserVM = require '../user/UserVM'
 RoleVM = require '../auth/RoleVM'
 RightVM = require '../auth/RightVM'

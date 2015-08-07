@@ -1,8 +1,8 @@
 m = require 'mithril'
 ViewModel = require '../abstract/ViewModel'
-Validation = require '../util/Validation'
+Validation = require '../../../../../shared/util/Validation'
 require './auth.es.coffee'
-T9n = require '../util/T9n'
+T9n = require '../../../../../shared/util/T9n'
 
 # For a shared user between multiple applications roles like 'appname.rolename' can be used.
 module.exports = class RoleVM extends ViewModel
