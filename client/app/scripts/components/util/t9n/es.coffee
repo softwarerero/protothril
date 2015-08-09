@@ -20,4 +20,4 @@ T9n.map "es",
     saved: '@{modelName} guardado'
     deleted: '@{modelName} borrado'
     showFromTo: 'Mostrar @{from} a @{to} de @{total}'
-  
+    Filter: 'Filtrar'

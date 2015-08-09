@@ -35,7 +35,7 @@ module.exports = class TableHelper
   makeTable: (ctrl, objs, theads, tdata) ->
 #    console.log 'vm: ' + JSON.stringify @vm
     FORM {class: 'pure-form'}, [
-      INPUT {class: 'search', placeholder: 'Search', oninput: ctrl.tableHelper.filter}
+      INPUT {class: 'search', placeholder: t9n 'crud.Filter', oninput: ctrl.tableHelper.filter}
     ],
     TABLE {class: 'pure-table pure-table-striped', style: 'width: auto'}, [
       THEAD [
@@ -61,12 +61,29 @@ module.exports = class TableHelper
           TR {class: 'tableFooter'}, [
             TD t9n 'crud.showFromTo', {from: @vm.from, to: Math.min(@vm.from+@vm.pageSize,@vm.total), total: @vm.total}
             TD {colspan: tdata(obj).length}, [
-              I {class: 'fa fa-fast-backward action', onclick: m.withAttr('dataid', ctrl.first)}
-              I {class: 'fa fa-step-backward action', onclick: m.withAttr('dataid', ctrl.previous)}
-              I {class: 'fa fa-step-forward action', onclick: m.withAttr('dataid', ctrl.next)}
-              I {class: 'fa fa-fast-forward action', onclick: m.withAttr('dataid', ctrl.last)}
+              I {class: 'fa fa-fast-backward action', onclick: m.withAttr('dataid', @first)}
+              I {class: 'fa fa-step-backward action', onclick: m.withAttr('dataid', @previous)}
+              I {class: 'fa fa-step-forward action', onclick: m.withAttr('dataid', @next)}
+              I {class: 'fa fa-fast-forward action', onclick: m.withAttr('dataid', @last)}
             ]
           ]
         ]
     ]
-          
+
+
+  first: () =>
+    @vm.from = 0
+    @vm.all()
+  previous: () =>
+    if @vm.from >= @vm.pageSize
+      @vm.from = @vm.from - @vm.pageSize
+      @vm.all()
+  next: () =>
+    if @vm.from < @vm.total - @vm.pageSize
+      @vm.from = @vm.from + @vm.pageSize
+      @vm.all()
+  last: () =>
+    rest = @vm.total % @vm.pageSize
+    @vm.from = @vm.total - if rest then rest else @vm.pageSize 
+    @vm.all()
+    

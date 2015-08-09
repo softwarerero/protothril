@@ -20,21 +20,6 @@ module.exports = class Users extends Module
       VM.current.delete id
       m.redraw()
 
-    first: () ->
-      VM.current.from = 0
-      VM.current.all()
-    previous: () ->
-      if VM.current.from >= VM.current.pageSize
-        VM.current.from = VM.current.from - VM.current.pageSize
-        VM.current.all()
-    next: () ->
-      if VM.current.from < VM.current.total - VM.current.pageSize
-        VM.current.from = VM.current.from + VM.current.pageSize
-        VM.current.all()
-    last: () ->
-      rest = VM.current.total % VM.current.pageSize
-      VM.current.from = VM.current.total - rest
-      VM.current.all()
 
 
   @view: (ctrl) ->

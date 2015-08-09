@@ -6,6 +6,7 @@ require './auth.es.coffee'
 module.exports = class RightVM extends ViewModel
 
   constructor: () ->
+    super()
     @modelName = 'Right'
     @vm = RightVM
     @verb = 'right'

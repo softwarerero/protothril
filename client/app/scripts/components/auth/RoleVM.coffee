@@ -6,6 +6,7 @@ require './auth.es.coffee'
 module.exports = class RoleVM extends ViewModel
 
   constructor: () ->
+    super()
     @modelName = 'Role'
     @vm = RoleVM
     @verb = 'role'
@@ -13,6 +14,7 @@ module.exports = class RoleVM extends ViewModel
     @homeRoute = '/roles'
     @attributes = Object.create(null)
     @init()
+    @pageSize = 2
 
   init: () ->
     @attributes =
@@ -28,14 +30,14 @@ module.exports = class RoleVM extends ViewModel
     validation.test 'name', Validation.notNull obj.name(), {fieldName: T9n.get('name')}
     validation
 
-  forName: (name) ->
-#    console.log 'cache: ' + JSON.stringify @cache()
-    for kev, values of @cache()
-#      console.log 'attributes: ' + JSON.stringify values
-#      console.log 'name: ' + JSON.stringify values.name
-#      console.log 'is: ' + (values.name is name)
-      if values.name is name
-        idForName = values.id
-        return values
-    return null
+#  forName: (name) ->
+##    console.log 'cache: ' + JSON.stringify @cache()
+#    for kev, values of @cache()
+##      console.log 'attributes: ' + JSON.stringify values
+##      console.log 'name: ' + JSON.stringify values.name
+##      console.log 'is: ' + (values.name is name)
+#      if values.name is name
+#        idForName = values.id
+#        return values
+#    return null
     
