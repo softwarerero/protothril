@@ -46,16 +46,25 @@ exports.index = (params={}, callback) ->
     if callback
       callback(error, response)
       
-exports.getAll = (typeName=exports.typeName, indexName=exports.indexName, callback) ->
-  client.search {size: 1000000, index: indexName, type: typeName, body: {query: {match_all: {}}}, filter: {'exists': 'fetchDate'}}, (error, response, status) ->
+exports.getAll = (params, callback) ->
+  params.index = params.index || exports.indexName
+  params.size = params.size || 1000000
+  params.body = {query: {match_all: {}}}
+#  params._sourceExclude = {'exists', 'fetchDate'}
+  console.log 'params: ' + JSON.stringify params
+  client.search params, (error, response, status) ->
     if error
       console.log "error: " + error
       console.log "status: " + status
     else
-      response = for hit in response.hits.hits
+      console.log 'response: ' + JSON.stringify response
+      ret = {total: response.hits.total}
+      ret.objs = for hit in response.hits.hits
         obj = hit._source
         obj.id = hit._id
-        obj     
+        obj
+      response = ret
+    console.log 'response.length: ' + response.length
     callback(error, response)
 
 exports.getOne = (params={}, callback) ->

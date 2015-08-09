@@ -6,6 +6,11 @@ module.exports = class ViewModel
   @conf: @app.conf
   window.caches = {} # if caches are stored at window level different windows can edit different objects
 
+  constructor: () ->
+    @cachable = false
+    @pageSize = 0
+    @from = 0
+    @total = 0
 
   xhrConfig: (xhr) =>
     xhr.setRequestHeader "Authorization", 'Bearer ' + window.sessionStorage.token
@@ -25,19 +30,27 @@ module.exports = class ViewModel
       value
       
   stdRequest: =>
-    method: 'GET'
-    url: ViewModel.conf.url + "#{@url}"
-    config: @xhrConfig
-    extract: @extract
-    deserialize: @deserialize 
+    request =
+      method: 'GET'
+      url: ViewModel.conf.url + "#{@url}"
+      config: @xhrConfig
+      extract: @extract
+      deserialize: @deserialize
+      data: {}
+    if @pageSize
+      request.data.size = @pageSize
+    if @from
+      request.data.from = @from
+    request
      
   all: (callback) ->
-    if not window.caches[@verb] 
+    if not @cachable || not window.caches[@verb] 
       @loadingRequest(@stdRequest()).then (xhr, xhrOptions) =>
         if xhr
-          console.log 'xhr: ' + JSON.stringify xhr
+#          console.log 'xhr: ' + JSON.stringify xhr
+          @total = xhr.total
           objs = Object.create(null)
-          for obj in xhr
+          for obj in xhr.objs
             objs[obj.id] = obj
           @vm.current.setCache objs
           if callback
@@ -45,12 +58,9 @@ module.exports = class ViewModel
            
 
   save: () ->
-    console.log 'save'
     request = {method: "PUT", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: @getAttributes()}
     @loadingRequest(request).then (xhr, xhrOptions) =>
-#      console.log 'save.xhr: ' + JSON.stringify xhr
       @cache()[xhr.id] = xhr.obj
-#      console.log 'save.@cache(): ' + JSON.stringify @cache()
       @msgSuccess T9n.get 'crud.saved', {modelName: @modelName}
     false
  
@@ -59,7 +69,6 @@ module.exports = class ViewModel
     data = {id: id}
     request = {method: "DELETE", url: ViewModel.conf.url + "#{@url}", config: @xhrConfig, data: data}
     @loadingRequest(request).then (xhr, xhrOptions) =>
-      console.log 'del.id: ' + xhr.id
       delete @cache()[xhr.id]
       @msgSuccess T9n.get 'crud.deleted', {modelName: @modelName}
     false    
@@ -71,7 +80,6 @@ module.exports = class ViewModel
     if objs[id]
       @cloneAttributes @vm.current, objs[id]
     else
-      console.log 'GET: ' + ViewModel.conf.url + "#{@url}/#{id}"
       request = {method: "GET", url: ViewModel.conf.url + "#{@url}/#{id}", config: @xhrConfig}
       @loadingRequest(request).then (xhr, xhrOptions) =>
         if not xhr

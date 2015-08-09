@@ -16,9 +16,9 @@ Protothril is the idea of a blueprint for web applications. It should include th
 * Ability to translate UI √
 * Validation (in work)
 * Crud lists with 
-  * sorting, √
-  * filtering and √
-  * pagination.
+  * sorting √
+  * filtering √
+  * pagination √
 * Easy form creation with helpers for 
   * select √
   * date √

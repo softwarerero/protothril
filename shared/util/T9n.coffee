@@ -48,5 +48,5 @@ module.exports = class T9n
   @isDefined: (label) ->
     !!(@maps[@language]?[label] || @maps[@defaultLanguage]?[label])
 
-@t9n = (x, includePrefix, params) -> T9n.get(x)
-window.T9n = @T9n = T9n
+window?.t9n = (x, params) -> T9n.get x, params
+window?.T9n = @T9n = T9n

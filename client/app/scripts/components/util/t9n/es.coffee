@@ -19,3 +19,5 @@ T9n.map "es",
   crud:
     saved: '@{modelName} guardado'
     deleted: '@{modelName} borrado'
+    showFromTo: 'Mostrar @{from} a @{to} de @{total}'
+  

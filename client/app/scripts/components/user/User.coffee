@@ -35,9 +35,11 @@ module.exports = class User extends Module
       m.route VM.current.homeRoute
       false
  
+      
     save: () ->
       attr = VM.current.attributes
       validation = VM.validate attr
+      console.log 'validation: ' + validation
       if validation.isInvalid()
         firstMsg = validation.msgs[0]
         field = document.getElementById firstMsg.name

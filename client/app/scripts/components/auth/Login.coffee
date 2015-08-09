@@ -8,7 +8,7 @@ module.exports = class Login extends Module
 
   @loggedIn: -> !!window.sessionStorage.token
   @username: -> window.sessionStorage.username
-  @email = m.prop('test@sun.com.py')
+  @email = m.prop('test12@sun.com.py')
   @password = m.prop('test123')
   @profile = null
 

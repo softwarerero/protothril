@@ -32,6 +32,8 @@ https://libraries.io/search?q=mithril
 # CSS
 http://nicolasgallagher.com/pure-css-speech-bubbles/demo/
 
+### FontAwesome
+
 ### Date Picker
 https://github.com/pinguxx/sm-datepicker
 https://libraries.io/bower/sm-datepicker

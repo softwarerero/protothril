@@ -1,5 +1,7 @@
 m = require 'mithril'
+# need to require shared moduls once somewhere
 require '../../../shared/util/T9n'
+require '../../../shared/util/Validation'
 
 # Main namespace
 window.App = app = {} 
@@ -37,9 +39,7 @@ m.route document.getElementById("my-content"), "/users",
   "/confirmRegistration/:email/:token": confirmRegistration
 
 
-#console.log '1: ' + JSON.stringify require './components/util/T9n/en'
 if not T9n.isDefined 't9nLanguage'
-  console.log '2'
   require './components/util/T9n/en'
   require './components/util/T9n/es'
   #  T9n.map "en", require '../auth/auth.en'

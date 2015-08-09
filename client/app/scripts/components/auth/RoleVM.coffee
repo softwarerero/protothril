@@ -24,8 +24,8 @@ module.exports = class RoleVM extends ViewModel
   createObj: -> new RoleVM
 
   @validate: (obj) ->
-    validation = new @Validation()
-    validation.test 'name', @Validation.notNull obj.name(), {fieldName: T9n.get('name')}
+    validation = new Validation()
+    validation.test 'name', Validation.notNull obj.name(), {fieldName: T9n.get('name')}
     validation
 
   forName: (name) ->

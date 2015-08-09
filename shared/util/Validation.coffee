@@ -1,16 +1,13 @@
-T9n = require './T9n'
-
-
 module.exports = class Validation
 
-  @notNull: (x, params) -> if !!x then null else @t9n 'validation.notNull', params
-  @minLength: (x, params) -> if x?.length >= params.length then null else @t9n 'validation.minLength', params
-  @maxLength: (x, params) -> if x?.length < params.length then null else @t9n 'validation.minLength', params
-  @min: (x, params) -> if x >= params.min then null else @t9n 'validation.min', params
-  @max: (x, params) -> if x >= params.max then null else @t9n 'validation.max', params
+  @notNull: (x, params) -> if !!x then null else @makeMsg 'validation.notNull', params
+  @minLength: (x, params) -> if x?.length >= params.length then null else @makeMsg 'validation.minLength', params
+  @maxLength: (x, params) -> if x?.length < params.length then null else @makeMsg 'validation.minLength', params
+  @min: (x, params) -> if x >= params.min then null else @makeMsg 'validation.min', params
+  @max: (x, params) -> if x >= params.max then null else @makeMsg 'validation.max', params
 
   # http://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149
-  @regEx: (x, regex, msg, params) -> if x.match regex then null else @t9n msg, params
+  @regEx: (x, regex, msg, params) -> if x.match regex then null else @makeMsg msg, params
   @username: (x, params) -> @regex x, /^[a-z0-9_-]{3,16}$/, params
   @slug: (x, params) -> @regex x, /^[a-z0-9-]+$/, params
   @url: (x, params) -> @regex x, /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/, params
@@ -25,8 +22,7 @@ module.exports = class Validation
       ([a-zA-Z.]{2,6})  #followed by 2 to 6 letters or periods
       $ ///i, 'validation.email', params
     
-#  @t9n: (msg, params) -> T9n.get msg, params, false
-  @t9n: (error, params) -> {msg: error, params: params}
+  @makeMsg: (error, params) -> {msg: error, params: params}
 
   constructor: () ->
     @msgs = []
@@ -42,6 +38,5 @@ module.exports = class Validation
     
   isValid: -> !@msgs.length
   isInvalid: -> !!@msgs.length
-#  firstMsg: -> @msgs[0] # T9n.get @msgs[0].msg, {fieldName: @msgs[0].name}
 
-@Validation = Validation
+window?.Validation = @Validation = Validation

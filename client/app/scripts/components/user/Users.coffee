@@ -20,38 +20,37 @@ module.exports = class Users extends Module
       VM.current.delete id
       m.redraw()
 
+    first: () ->
+      VM.current.from = 0
+      VM.current.all()
+    previous: () ->
+      if VM.current.from >= VM.current.pageSize
+        VM.current.from = VM.current.from - VM.current.pageSize
+        VM.current.all()
+    next: () ->
+      if VM.current.from < VM.current.total - VM.current.pageSize
+        VM.current.from = VM.current.from + VM.current.pageSize
+        VM.current.all()
+    last: () ->
+      rest = VM.current.total % VM.current.pageSize
+      VM.current.from = VM.current.total - rest
+      VM.current.all()
 
 
   @view: (ctrl) ->
     [
       H4(T9n.get 'Users')
       DIV {id: 'users'}, [
-        FORM {class: 'pure-form'}, [
-          INPUT {class: 'search', placeholder: 'Search', oninput: ctrl.tableHelper.filter}
+        theads = -> [
+          TH( {'data-sort-by': 'email', onclick: ctrl.tableHelper.sorts}, T9n.get 'email')
+          TH( {'data-sort-by': 'nickname', onclick: ctrl.tableHelper.sorts}, T9n.get 'nickname')
         ]
-        TABLE {class: 'pure-table pure-table-striped'}, [
-          THEAD [
-            TR [  
-              TH( I {class: 'fa fa-plus action th-action', onclick: m.withAttr('dataid', ctrl.add)} )
-              TH( {'data-sort-by': 'email', onclick: ctrl.tableHelper.sorts}, T9n.get 'email')
-              TH( {'data-sort-by': 'nickname', onclick: ctrl.tableHelper.sorts}, T9n.get 'nickname')
-            ]
-          ]
-          TBODY {class: 'list'}, [
-            for id, obj of VM.current.cache()
-              if not obj.filter
-                TR {id: 'tableRow'}, [
-                  TD [
-                    I {class: 'fa fa-pencil-square-o action', onclick: m.withAttr('dataid', ctrl.edit), dataid: obj.id}
-                    SPAN ' '
-                    I {class: 'fa fa-trash action', onclick: m.withAttr('dataid', ctrl.delete), dataid: obj.id}
-                  ]
-                  TD(obj.email, class: 'email'),
-                  TD(obj.nickname, class: 'nickname')
-                ]
-          ]
+        tdata = (obj) -> [
+          TD(obj.email, class: 'email'),
+          TD(obj.nickname, class: 'nickname')
         ]
+        ctrl.tableHelper.makeTable(ctrl, VM.current.cache(), theads, tdata)
       ]
     ]
 
-
+    
