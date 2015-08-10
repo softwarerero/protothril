@@ -24,7 +24,7 @@ Protothril is the idea of a blueprint for web applications. It should include th
   * date √
   * number
   * currency
-  * captcha
+  * captcha (https://github.com/emotionLoop/visualCaptcha)
   * file/image upload
 * User Management
   * Registration √ 
@@ -38,7 +38,7 @@ Protothril is the idea of a blueprint for web applications. It should include th
 # V2 Features
 * Datatransport with Messagepack
 * Flexibilization of CSS (Purecss, Bootstrap, ...) with [transformers](http://lhorie.github.io/mithril-blog/when-css-lets-you-down.html)
-* DDP
+* DDP over SSE
 * image manipulation
 
 ### Ideas

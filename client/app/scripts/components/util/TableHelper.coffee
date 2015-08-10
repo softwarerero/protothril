@@ -56,7 +56,7 @@ module.exports = class TableHelper
               ]
             ]
       ]
-      if @vm.pageSize < @vm.total
+      if @vm.pageSize and @vm.pageSize < @vm.total
         TFOOT [
           TR {class: 'tableFooter'}, [
             TD t9n 'crud.showFromTo', {from: @vm.from, to: Math.min(@vm.from+@vm.pageSize,@vm.total), total: @vm.total}
@@ -74,14 +74,17 @@ module.exports = class TableHelper
   first: () =>
     @vm.from = 0
     @vm.all()
+    
   previous: () =>
     if @vm.from >= @vm.pageSize
       @vm.from = @vm.from - @vm.pageSize
       @vm.all()
+      
   next: () =>
     if @vm.from < @vm.total - @vm.pageSize
       @vm.from = @vm.from + @vm.pageSize
       @vm.all()
+      
   last: () =>
     rest = @vm.total % @vm.pageSize
     @vm.from = @vm.total - if rest then rest else @vm.pageSize 
