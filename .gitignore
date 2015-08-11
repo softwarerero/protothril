@@ -5,7 +5,7 @@
 **/bower_components
 **/gulp/
 **/*.iml
-**/*.conf
+**/conf.coffee
 /client/test
 /client/.git
 /client/app/www

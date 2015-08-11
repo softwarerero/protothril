@@ -22,8 +22,9 @@ Protothril is the idea of a blueprint for web applications. It should include th
 * Easy form creation with helpers for 
   * select √
   * date √
-  * number
+  * number (InputHelper Mask Field) √
   * currency
+  * boolean switch
   * captcha (https://github.com/emotionLoop/visualCaptcha)
   * file/image upload
 * User Management

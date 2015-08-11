@@ -1,9 +1,10 @@
 m = require 'mithril'
-Select2Helper = require '../util/Select2Helper'
 Module = require '../abstract/Module'
 VM = require './UserVM'
 RoleVM = require '../auth/RoleVM'
 DatePicker = require 'sm-datepicker'
+Select2Helper = require '../util/Select2Helper'
+InputHelper = require '../util/ui/InputHelper'
 
 module.exports = class User extends Module
 
@@ -39,7 +40,6 @@ module.exports = class User extends Module
     save: () ->
       attr = VM.current.attributes
       validation = VM.validate attr
-      console.log 'validation: ' + validation
       if validation.isInvalid()
         firstMsg = validation.msgs[0]
         field = document.getElementById firstMsg.name

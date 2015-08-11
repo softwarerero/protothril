@@ -1,4 +1,4 @@
-# Protoype Server  
+# Protothril Server  
 
 * Start App
 nohup coffee coffee/server.coffee >> server.log &
@@ -54,7 +54,7 @@ Then to load elasticsearch now:
 Or, if you don't want/need launchctl, you can just run:
     elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml
 ==> Summary
-🍺  /usr/local/Cellar/elasticsearch/1.1.1: 31 files, 21M, built in 42 seconds
+  /usr/local/Cellar/elasticsearch/1.1.1: 31 files, 21M, built in 42 seconds
 
 Tunnel to EL
   ssh -f -N -L 9300:127.0.0.1:9200 sun@clasiserv
