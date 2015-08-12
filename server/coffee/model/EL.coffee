@@ -82,27 +82,27 @@ exports.getOne = (params={}, callback) ->
     if callback
       callback(error, response)
 
-#exports.createMapping = ->
+exports.createMapping = ->
 #  client.indices.getMapping {},  (error, response) ->
 #    console.log "error: " + error
 #    console.log "response: " + JSON.stringify response
-#  client.indices.delete {index: exports.indexName}, (error, response) ->
-#    console.log "error: " + error
-#    console.log "response: " + JSON.stringify response
-#  client.indices.create {index: exports.indexName}, (error, response) ->
-#    console.log "error: " + error
-#    console.log "response: " + JSON.stringify response
-#    params =
-#      index: exports.indexName
-#      type: 'user'
-#      ignoreConflicts: true
-#      body:
-#        user:
-#          properties:
-#            email: {"type" : "string", "index" : "not_analyzed"}
-#    client.indices.putMapping params, (error, response) ->
-#      console.log "error: " + error
-#      console.log "response: " + JSON.stringify response
+  client.indices.delete {index: exports.indexName}, (error, response) ->
+    console.log "error: " + error
+    console.log "response: " + JSON.stringify response
+    client.indices.create {index: exports.indexName}, (error, response) ->
+      console.log "error: " + error
+      console.log "response: " + JSON.stringify response
+      params =
+        index: exports.indexName
+        type: 'user'
+        ignoreConflicts: true
+        body:
+          user:
+            properties:
+              email: {"type" : "string", "index" : "not_analyzed"}
+      client.indices.putMapping params, (error, response) ->
+        console.log "error: " + error
+        console.log "response: " + JSON.stringify response
       
 #exports.searchExists = (params={}, callback) ->
 #  params.index = params.index || exports.indexName

@@ -25,7 +25,7 @@ module.exports = class UserVM extends ViewModel
       email: m.prop '1@1.cc'
       nickname: m.prop ''
       firstname: m.prop ''
-      lastname: m.prop 123
+      lastname: m.prop ''
       password: m.prop ''
       birthday: m.prop ''
       rols: m.prop []

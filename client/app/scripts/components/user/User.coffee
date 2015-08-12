@@ -71,7 +71,7 @@ module.exports = class User extends Module
         @makeInput attr, 'email'
         @makeInput attr, 'firstname' 
         @makeInput attr, 'lastname'
-        m 'label', T9n.get 'Roles'
+        m 'label', {class: "clear"}, T9n.get 'Roles'
         m.component(Select2Helper, {data: ctrl.selectData(), values: attr.rols(), onchange: ctrl.changeRole}, {multiple: 'multiple', id: 'sel1'})
         LABEL {}, T9n.get 'birthday'
         INPUT {type: 'date', id: 'birthday', onchange: m.withAttr("value", attr['birthday']), value: attr['birthday']?() || null}, pickadate(this)

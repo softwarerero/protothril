@@ -1,6 +1,6 @@
-# use like: InputHelper.makeInput attr, 'lastname', {mask: '####-##-___-# $'}
 module.exports = class InputHelper
-  
+
+  # use like: InputHelper.makeInput attr, 'lastname', {mask: '####-##-___-# $'}
   @makeInput = (attr, field, params) ->
     changeHandler = if params.mask
       setMaskValue(attr[field])
@@ -51,3 +51,33 @@ module.exports = class InputHelper
       value = stripMask value
       value = value.join ''
       field value
+      
+  #use: InputHelper.makeRadioToggle attr, 'lastname', ['Hans', 'Franz']    
+  @makeRadioToggle = (attr, label, values) ->
+
+    field = attr[label]
+    
+    changed = () ->
+      value = document.querySelector('input[name="mx"]:checked').id
+#      console.log 'changed: ' + value
+#      console.log label + ': ' + field()
+      field(value)
+
+
+    config = (element, isInitialized, context) ->
+      if isInitialized then return
+      element.addEventListener('click', changed)
+    
+    
+    m "div", [
+      m "label", t9n label
+      for v in values
+        options = {type: 'radio', id: v, name: 'mx', config: config}
+        if (v is field())
+          options.checked = 'checked'
+        m "span", {class: "mx-button"}, [
+          m "input", options
+          m "label", {class: "", for: v}, t9n v
+        ]
+    ]
+    
