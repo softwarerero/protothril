@@ -24,7 +24,7 @@ module.exports = class Users extends Module
 
   @view: (ctrl) ->
     [
-      H4(T9n.get 'Users')
+      m 'h4', T9n.get 'Users'
       DIV {id: 'users'}, [
         theads = -> [
           TH( {'data-sort-by': 'email', onclick: ctrl.tableHelper.sorts}, T9n.get 'email')

@@ -38,6 +38,8 @@ http://nicolasgallagher.com/pure-css-speech-bubbles/demo/
 https://github.com/pinguxx/sm-datepicker
 https://libraries.io/bower/sm-datepicker
 
+#### Date Picker to evalute: https://github.com/bevacqua/rome
+
 ## npm
 ### https://gist.github.com/coolaj86/1318304
 ### npm link - https://docs.npmjs.com/cli/link
@@ -49,6 +51,10 @@ http://cordova.apache.org/docs/en/5.0.0/
 cordova.apache.org/docs/en/5.0.0/guide_cli_index.md.html#The%20Command-Line%20Interface
 cordova run --emulator android --target nexus-s # run emulator
 cordova run android --device  #to deploy the app on a connected device
+
+#### Cordova Plugins
+cordova plugin add cordova-plugin-camera
+cordova plugin add cordova-plugin-contacts
 
 ### Android
 /usr/local/Cellar/android-sdk/22.6.2/bin/android sdk # manage sdk

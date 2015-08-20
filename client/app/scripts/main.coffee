@@ -1,7 +1,9 @@
-m = require 'mithril'
 # need to require shared moduls once somewhere
+m = require '../../../node_modules/mithril/mithril'
+require('../../../node_modules/mithril.sugartags/mithril.sugartags')(m, window)
 require '../../../shared/util/T9n'
 require '../../../shared/util/Validation'
+#require '../../../node_modules/cordova-lib/cordova-lib'
 
 # Main namespace
 window.App = app = {} 
@@ -18,11 +20,13 @@ right = require './components/auth/Right'
 roles = require './components/auth/Roles'
 role = require './components/auth/Role'
 register = require './components/auth/Register'
+home = require './home'
 
 m.module(document.getElementById("message"), {controller: message.controller, view: message.view})
 m.module(document.getElementById("menu"), {controller: menu.controller, view: menu.view})
 
-m.route document.getElementById("my-content"), "/users", 
+m.route document.getElementById("my-content"), "/home",
+  "/home": home
   "/login": login
   "/logout": logout
   "/users": users
@@ -47,7 +51,6 @@ if not T9n.isDefined 't9nLanguage'
   #  T9n.map "en", require '../user/user.en'
   require './components/user/user.es'
   T9n.setLanguage 'es'
-
 
 
 #process.on 'uncaughtException', (err) ->

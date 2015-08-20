@@ -1,4 +1,5 @@
 m = require 'mithril'
+
 module.exports = class RequestWrapper
   constructor: (@opts) ->
     me = this

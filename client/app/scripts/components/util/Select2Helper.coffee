@@ -1,3 +1,5 @@
+m = require 'mithril'
+
 Select2 = require 'select2'
 
 module.exports = class Select2Helper

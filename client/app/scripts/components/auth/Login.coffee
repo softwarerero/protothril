@@ -11,15 +11,13 @@ module.exports = class Login extends Module
   @email = m.prop('test12@sun.com.py')
   @password = m.prop('test123')
   @profile = null
-
-#  constructor: (@app) ->
-#    super(@app) 
     
   @controller: () ->
+
     login: () ->
       data = {email: Login.email(), password: Login.password()}
       url = Login.conf.url + 'login'
-      console.log 'url: ' + url
+      log('url: ' + url)
       request = {method: "POST", background: false, url: url, data: data, extract: Login.extract}
       m.request(request).then(@log) #.then(authorized)
       false

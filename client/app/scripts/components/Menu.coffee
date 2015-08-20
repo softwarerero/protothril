@@ -10,7 +10,8 @@ module.exports = class Menu
     return m "div", {class: 'pure-menu pure-menu-horizontal'},
 #      m('p', Login.loggedIn())
 #      m('p', Login.username()) 
-      m 'ul', {class: 'pure-menu-list'}, [ 
+      m 'ul', {class: 'pure-menu-list'}, [
+        mlink '/home', T9n.get 'Home'
         m 'li', {class: 'pure-menu-item pure-menu-has-children pure-menu-allow-hover'}, [
           m 'a', {class: 'pure-menu-link', href: '#'}, T9n.get 'Admin'
           m 'ul', {class: 'pure-menu-children'}, [

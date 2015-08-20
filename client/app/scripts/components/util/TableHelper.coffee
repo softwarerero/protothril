@@ -1,3 +1,5 @@
+m = require 'mithril'
+
 module.exports = class TableHelper
 
   constructor: (@vm) ->
